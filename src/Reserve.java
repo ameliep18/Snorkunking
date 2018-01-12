@@ -5,6 +5,15 @@ public class Reserve {
 	/*public static final int VK_KP_DOWN = 225;
 	public static final int VK_KP_UP = 224;
 	public static final int VK_ENTER = 10;*/
+	private int oxygen;
+
+	public Reserve(int oxygen) {
+		this.oxygen = oxygen;
+	}
+
+	public int getOxygen() {
+		return oxygen;
+	}
 
 	public int oxygenReserve(int nbLevels) {
 		int nbReserve = 1;
@@ -35,7 +44,6 @@ public class Reserve {
 
 	public int oxygenConsuption(int nbTresors, int oxygene) {
 		oxygene = 1 - nbTresors;
-
 		return oxygene;
 	}
 
