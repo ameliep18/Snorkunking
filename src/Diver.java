@@ -1,8 +1,12 @@
+
+
 import java.util.ArrayList;
 
 public class Diver {
 
     private String playerName;
+    private Level playerLevel;
+
     public static ArrayList<Diver> diverList = new ArrayList<>();
     public static ArrayList<Diver> IAList = new ArrayList<>();
 
@@ -43,7 +47,8 @@ public class Diver {
     }*/
 
    public void takeChest(Cave cave, Level level) {
-       TreasureChest.chestTransported.add(cave.getLevelList().get(level.getIdLevel()).getChest());
+       TreasureChest.chestTransported.add(cave.getLevelList().get(level.getIdLevel()-1).getChest());
+       System.out.println(TreasureChest.chestTransported);
    }
 
 

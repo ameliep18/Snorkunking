@@ -4,7 +4,7 @@ import java.util.Random;
 public class Cave {
 
     private int idCave;
-    public static ArrayList<Level> levelList = new ArrayList<>();
+    public ArrayList<Level> levelList = new ArrayList<>();
 
     public int getIdCave() {
         return idCave;
@@ -16,13 +16,13 @@ public class Cave {
     public Cave(int idCave) {
         this.idCave = idCave;
         int n = this.nbLevels();
-        ArrayList<Level> levelList = new ArrayList<>();
+        ArrayList<Level> levelList = this.levelList;
         for (int i=0; i< n; i++) {
             TreasureChest chest = new TreasureChest(i+1,treasuresPerChest());
             Level level = new Level(i+1, chest);
             levelList.add(level);
         }
-        System.out.println(n);
+        //System.out.println(n);
         System.out.println(levelList);
     }
 
