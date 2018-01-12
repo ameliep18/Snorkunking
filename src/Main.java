@@ -116,7 +116,7 @@ public class Main {
                 Diver diver = new Diver(sc.next(),200- ((i - 1) * 70), 718);
                 Diver.diverList.add(diver);
                 StdDraw.text(75, 825 - (i * 25), "Player" + i + " : " + diver.getPlayerName());
-                StdDraw.picture(diver.getX(), diver.getY(), "Plongeur.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
+                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
                 //System.out.println(diver.getPlayerName());
             }
