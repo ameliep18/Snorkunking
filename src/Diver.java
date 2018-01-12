@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Diver {
 
     private String playerName;
+    private double xDiver;
+    private double yDiver;
     private Level playerLevel;
 
     public static ArrayList<Diver> diverList = new ArrayList<>();
@@ -12,13 +14,19 @@ public class Diver {
 
 
 
-    public Diver(String playerName) {
+    public Diver(String playerName, double x, double y) {
         this.playerName = playerName;
+        this.xDiver = x;
+        this.yDiver = y;
     }
 
     public String getPlayerName() {
         return playerName;
     }
+
+    public double getXDiver() { return xDiver;}
+
+    public double getYDiver() { return yDiver;}
 
     public static final int VK_ENTER = 10;
     public static final int VK_KP_DOWN = 225;
@@ -49,6 +57,11 @@ public class Diver {
    public void takeChest(Cave cave, Level level) {
        TreasureChest.chestTransported.add(cave.getLevelList().get(level.getIdLevel()-1).getChest());
        System.out.println(TreasureChest.chestTransported);
+   }
+
+   public void goDown() {
+
+
    }
 
 

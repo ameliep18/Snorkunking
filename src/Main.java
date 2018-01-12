@@ -108,28 +108,28 @@ public class Main {
         int nbIA = sc.nextInt();
         int divers = nbPlayers + nbIA;
 
-        if (divers <= 4) {
+        if (divers <= 2) {
             Font font2 = new Font("Arial", Font.BOLD, 15);
             StdDraw.setFont(font2);
             for (int i = 1; i <= nbPlayers; i++) {
                 System.out.println("Nom du joueur numéro " + i + " :");
-                Diver diver = new Diver(sc.next());
+                Diver diver = new Diver(sc.next(),200- ((i - 1) * 70), 718);
                 Diver.diverList.add(diver);
                 StdDraw.text(75, 825 - (i * 25), "Player" + i + " : " + diver.getPlayerName());
-                StdDraw.picture(100 + ((i - 1) * 70), 718, "Plongeur.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
+                StdDraw.picture(diver.getX(), diver.getY(), "Plongeur.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
                 //System.out.println(diver.getPlayerName());
             }
             //System.out.println(Diver.diverList);
             for (int i = 1; i <= nbIA; i++) {
                 String nameIA = "IA " + Integer.toString(i);
-                Diver IA = new Diver(nameIA);
+                Diver IA = new Diver(nameIA, 300 - ((i - 1) * 70), 718);
                 Diver.IAList.add(IA);
                 StdDraw.picture(300 + ((i - 1) * 70), 718, "IA.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
             }
         } else {
-            System.out.println("Please do not enter much than 4 players (diver or IA)");
+            System.out.println("Please do not enter much than 2 players (diver or IA)");
             System.out.println("Start again");
         }
     }
