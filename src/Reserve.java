@@ -42,8 +42,8 @@ public class Reserve {
 		
 	}
 
-	public int oxygenConsuption(int nbTresors, int oxygene) {
-		oxygene = 1 - nbTresors;
+	public int oxygenConsuption(int nbCoffres, int oxygene) {
+		oxygene = 1 - nbCoffres;
 		return oxygene;
 	}
 
