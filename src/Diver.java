@@ -59,10 +59,53 @@ public class Diver {
        System.out.println(TreasureChest.chestTransported);
    }
 
-   public void goDown() {
+   public void goDown(Cave cave, Level playerLevel) {
+       int idLevelDown = playerLevel.getIdLevel() + 1;
+       if (idLevelDown < cave.getNList().get(cave.getIdCave()-1)) { //si idLevelDown < n
+           xDiver = cave.getLevelList().get(idLevelDown-1).getXLevel();
+           yDiver = cave.getLevelList().get(idLevelDown-1).getYLevel();
+       }
+       else {
+           int newIdCave = cave.getIdCave() + 1;
+           if (newIdCave == 2) {
+               goDown(Main.cave2, Main.cave2.getLevelList().get(0));
+           }
+           else if (newIdCave == 3) {
+               goDown(Main.cave3, Main.cave3.getLevelList().get(0));
+           }
+           else {
+               // on est tout en bas, on ne fait donc rien
+           }
+       }
+   }
 
+   public void goUp(Cave cave, Level playerLevel) {
+       int idLevelUp = playerLevel.getIdLevel() - 1;
+       if (idLevelUp == 1) {
+           if (cave.getIdCave() == 1) { //on arrivera au dépot
+               xDiver = 200; //à bidouiller
+               yDiver = 725;
+           }
+           else {
+               int newIdCave = cave.getIdCave() - 1;
+               if (newIdCave == 1) {
+                   goDown(Main.cave1, Main.cave1.getLevelList().get(Main.cave1.getNList().get(0)-1));
+               }
+               else if (newIdCave == 2) {
+                   goDown(Main.cave2, Main.cave2.getLevelList().get(Main.cave2.getNList().get(1)-1));
+               }
+               else {
+                   // on est tout en haut, on ne fait donc rien
+               }
+           }
+       }
+       else {
+           xDiver = cave.getLevelList().get(idLevelUp - 1).getXLevel();
+           yDiver = cave.getLevelList().get(idLevelUp - 1).getYLevel();
+       }
 
    }
+
 
 
 }

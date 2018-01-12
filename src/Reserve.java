@@ -1,10 +1,5 @@
-import static edu.princeton.cs.introcs.StdDraw.isKeyPressed;
-
 public class Reserve {
 
-	/*public static final int VK_KP_DOWN = 225;
-	public static final int VK_KP_UP = 224;
-	public static final int VK_ENTER = 10;*/
 	private int oxygen;
 
 	public Reserve(int oxygen) {

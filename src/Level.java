@@ -14,7 +14,9 @@ public class Level {
         return idLevel;
     }
 
+    public double getXLevel() { return xLevel; }
 
+    public double getYLevel() { return yLevel; }
 
     public Level(int idLevel, TreasureChest chest, double xLevel, double yLevel) {
         this.idLevel = idLevel;
@@ -22,6 +24,8 @@ public class Level {
         this.xLevel = xLevel;
         this.yLevel = yLevel;
     }
+
+
 }
 
 

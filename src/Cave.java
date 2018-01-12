@@ -4,33 +4,48 @@ import java.util.Random;
 public class Cave {
 
     private int idCave;
+    private double caveHeight;
+    private int nbLevels;
     public ArrayList<Level> levelList = new ArrayList<>();
+    public static ArrayList<Integer> NList = new ArrayList<>();
 
     public int getIdCave() {
         return idCave;
     }
-    public ArrayList<Level> getLevelList() {
-        return levelList;
-    }
+    public double getCaveHeight() { return caveHeight; }
+    public ArrayList<Level> getLevelList() { return levelList; }
+    public ArrayList<Integer> getNList() { return NList; }
 
-    public Cave(int idCave) {
+
+    public Cave(int idCave, double caveHeight) {
         this.idCave = idCave;
+        this.caveHeight = caveHeight; //hauteur de la cave
         int n = this.nbLevels();
+        Cave.NList.add(n);
+        double h = caveHeight/n; //hauteur des niveaux
+        double beginning = 0;
         ArrayList<Level> levelList = this.levelList;
+        if (idCave ==1)
+            beginning = 700;
+        if (idCave == 2)
+            beginning = 375;
+        if (idCave == 3)
+            beginning = 150;
+        Level deposit = new Level(0, null, 400,725); //création du depot = level0, là où l'on dépose les coffres
         for (int i=0; i< n; i++) {
-            TreasureChest chest = new TreasureChest(i+1,treasuresPerChest());
-            Level level = new Level(i+1, chest);
+            TreasureChest chest = new TreasureChest(i+1,treasuresPerChest()); //création des coffres
+            Level level = new Level(i+1, chest, 400,beginning - (i*h) - (h/2)); //création des niveaux
             levelList.add(level);
         }
-        //System.out.println(n);
-        System.out.println(levelList);
+        System.out.println(n);
+        //System.out.println(NList);
     }
 
 
 	public int nbLevels() { //renvoie le nombre de niveaux par cave
 	    int caveNbLevels = 0;
-        int minLevel = 0;
-        int maxLevel = 0;
+        int minLevel;
+        int maxLevel;
 
         if (this.getIdCave() == 1) {
             Random rnd = new Random();
@@ -75,7 +90,5 @@ public class Cave {
         caveNbTreasurePerChest = rnd1.nextInt(maxTreasure-minTreasure+1) + minTreasure;
         return caveNbTreasurePerChest;
     }
-
-
 
 } //ferme la classe
