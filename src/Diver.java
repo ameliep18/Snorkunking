@@ -89,10 +89,10 @@ public class Diver {
            else {
                int newIdCave = cave.getIdCave() - 1;
                if (newIdCave == 1) {
-                   goDown(Main.cave1, Main.cave1.getLevelList().get(Main.cave1.getNList().get(0)-1));
+                   goUp(Main.cave1, Main.cave1.getLevelList().get(Main.cave1.getNList().get(0)-1));
                }
                else if (newIdCave == 2) {
-                   goDown(Main.cave2, Main.cave2.getLevelList().get(Main.cave2.getNList().get(1)-1));
+                   goUp(Main.cave2, Main.cave2.getLevelList().get(Main.cave2.getNList().get(1)-1));
                }
                else {
                    // on est tout en haut, on ne fait donc rien
