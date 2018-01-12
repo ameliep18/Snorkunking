@@ -24,7 +24,7 @@ public class Main {
 
     }
 
-    public static int x = 400;
+    public static int x = 400; //coordonnée x du centre du rectangle représentant les caves
     public static double L1 = 325 / 2; //demie largeur cave1
     public static double L2 = 225 / 2; //demie largeur cave2
     public static double L3 = 150 / 2; //demie largeur cave3
@@ -43,7 +43,6 @@ public class Main {
         Font font1 = new Font("Arial", Font.BOLD, 30);
         StdDraw.setFont(font1);
         StdDraw.text(400, 870, "SNORKUNKING");
-
         Font font3 = new Font("Arial", Font.BOLD, 18);
         StdDraw.setFont(font3);
         StdDraw.text(700, 800, "OXYGEN");

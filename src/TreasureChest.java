@@ -3,17 +3,13 @@ import java.util.Random;
 
 public class TreasureChest {
 
-    public void getTreasures(int treasures) {
-        this.treasures = treasures;
-    }
-
+    private int idChest;
     private int treasures;
-	private double x = 750;
-	private double y;
+    public static ArrayList<TreasureChest> chestTransported = new ArrayList<>();
 
-	public TreasureChest(int treasures, double y) {
+
+	public TreasureChest(int idChest, int treasures) {
         this.treasures = treasures;
-        this.y = y;
     }
 
     public int getTreasures() {

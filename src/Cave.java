@@ -9,7 +9,6 @@ public class Cave {
     public int getIdCave() {
         return idCave;
     }
-
     public ArrayList<Level> getLevelList() {
         return levelList;
     }
@@ -17,10 +16,9 @@ public class Cave {
     public Cave(int idCave) {
         this.idCave = idCave;
         int n = this.nbLevels();
-        double y = 0;
         ArrayList<Level> levelList = new ArrayList<>();
         for (int i=0; i< n; i++) {
-            TreasureChest chest = new TreasureChest(treasuresPerChest(),y);
+            TreasureChest chest = new TreasureChest(i+1,treasuresPerChest());
             Level level = new Level(i+1, chest);
             levelList.add(level);
         }
