@@ -15,6 +15,7 @@ public class Level {
     }
 
 
+
     public Level(int idLevel, TreasureChest chest, double xLevel, double yLevel) {
         this.idLevel = idLevel;
         this.chest = chest;
