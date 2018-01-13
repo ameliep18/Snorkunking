@@ -5,7 +5,6 @@ public class TreasureChest {
 
     private int idChest;
     private int treasures;
-    public static ArrayList<TreasureChest> chestTransported = new ArrayList<>();
 
 
 	public TreasureChest(int idChest, int treasures) {

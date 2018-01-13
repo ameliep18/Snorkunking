@@ -1,9 +1,11 @@
 public class Reserve {
 
 	private int oxygen;
+	public static int reserve;
 
-	public Reserve(int oxygen) {
-		this.oxygen = oxygen;
+	public Reserve(Cave cave) {
+	    //this.oxygen = oxygen;
+	    Reserve.reserve =  2*Cave.NList.get(cave.getIdCave()-1);
 	}
 
 	public int getOxygen() {
@@ -13,32 +15,11 @@ public class Reserve {
 	public int oxygenReserve(int nbLevels) {
 		int nbReserve = 1;
 		int reserve = 2*nbLevels;
-
 		return reserve;
-		/*while (reserve != 0) {
-			if (isKeyPressed(VK_KP_DOWN)== true)
-                reserve = reserve - (1 + nbChestTransported);
-            if (isKeyPressed(VK_KP_UP)== true)
-                reserve = reserve - (1 + nbChestTransported);
-            if (isKeyPressed(VK_ENTER)== true)
-            	reserve = reserve - 1;
-		}
-		if (reserve == 0) {
-		    int nbTreasure = 0;
-			nbReserve = nbReserve + 1;
-			int score = nbTreasure;
-			if (nbReserve <= 3) {
-				reserve = 2*nbLevels;
-			}
-			else {
-				//fin du jeu
-			}
-		}*/
-		
 	}
 
-	public int oxygenConsuption(int nbCoffres, int oxygene) {
-		oxygene = 1 - nbCoffres;
+	public static int oxygenConsuption(int nbCoffres, int oxygene) {
+		oxygene = oxygene - (1 + nbCoffres);
 		return oxygene;
 	}
 

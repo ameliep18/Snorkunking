@@ -9,6 +9,7 @@ public class Main {
     public static Cave cave1;
     public static Cave cave2;
     public static Cave cave3;
+    public static Level deposit = new Level(0, null, 400,725); //création du depot = level0, là où l'on dépose les coffres
 
     public static void main(String[] args) {
 
@@ -26,7 +27,7 @@ public class Main {
         displayLevelAndChests(cave2);
         displayLevelAndChests(cave3);
         displayDiver();
-        //Diver.diverList.get(0).takeChest(cave1, cave1.getLevelList().get(0));
+        //Diver.diverList.get(0).play(cave1,1);
 
 
     }
@@ -48,7 +49,7 @@ public class Main {
         StdDraw.text(400, 870, "SNORKUNKING");
         Font font3 = new Font("Arial", Font.BOLD, 18);
         StdDraw.setFont(font3);
-        StdDraw.text(700, 800, "OXYGEN");
+        StdDraw.text(700, 820, "OXYGEN");
         StdDraw.show();
     }
 
@@ -69,15 +70,15 @@ public class Main {
         double h = 0;
         //System.out.println(n);
         if (cave.getIdCave() == 1) {
-            n = cave.getNList().get(0);
+            n = Cave.NList.get(0);
             h = cave1.getCaveHeight() / n;
         }
         if (cave.getIdCave() == 2) {
-            n = cave.getNList().get(1);
+            n = Cave.NList.get(1);
             h = cave2.getCaveHeight() / n;
         }
         if (cave.getIdCave() == 3) {
-            n = cave.getNList().get(2);
+            n = Cave.NList.get(2);
             h = cave3.getCaveHeight() / n;
         }
         StdDraw.setPenColor(StdDraw.WHITE);
@@ -103,19 +104,22 @@ public class Main {
             StdDraw.setFont(font2);
             for (int i = 1; i <= nbPlayers; i++) {
                 System.out.println("Nom du joueur numéro " + i + " :");
-                Diver diver = new Diver(sc.next(),200- ((i - 1) * 70), 725);
+                Diver diver = new Diver(sc.next(),i,200- ((i - 1) * 70), 725,deposit);
                 Diver.diverList.add(diver);
-                StdDraw.text(75, 825 - (i * 25), "Player" + i + " : " + diver.getPlayerName());
-                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
+                StdDraw.text(70, 835 - (i * 28), "Player" + i + " : " + diver.getPlayerName());
+                StdDraw.text(70, 820 - (i * 25), "Score : " + Integer.toString(0)); //score à afficher
+                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
                 //System.out.println(diver.getPlayerName());
             }
             //System.out.println(Diver.diverList);
             for (int i = 1; i <= nbIA; i++) {
                 String nameIA = "IA " + Integer.toString(i);
-                Diver IA = new Diver(nameIA, 300 - ((i - 1) * 70), 725);
+                Diver IA = new Diver(nameIA,i, 300 - ((i - 1) * 70), 725,deposit);
                 Diver.IAList.add(IA);
-                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 35, 35); //affiche le plongeur sur la ligne de départ
+                StdDraw.text(200, 835 - (i * 28), "Player" + i + " : " + IA.getPlayerName());
+                StdDraw.text(200, 820 - (i * 25), "Score : " + Integer.toString(0)); //score à afficher
+                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
             }
         }
@@ -125,28 +129,8 @@ public class Main {
         }
     }
 
-    private static void deleteChest(Cave cave, Level level) {
-        if (cave.getIdCave() == 1) {
-            int n = cave.getNList().get(0);
-            double h = cave1.getCaveHeight() / n;
-            StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
-            StdDraw.filledRectangle(750,(700 - (h/2)- ((level.getIdLevel()-1) * h)), 14, 14);
-        }
-        if (cave.getIdCave() == 2) {
-            int n = cave.getNList().get(1);
-            double h = cave2.getCaveHeight() / n;
-            StdDraw.setPenColor(StdDraw.GRAY);
-            StdDraw.filledRectangle(750,(375 - (h/2)- ((level.getIdLevel()-1) * h)), 14, 14);
-        }
-        if (cave.getIdCave() == 3) {
-            int n = cave.getNList().get(2);
-            double h = cave3.getCaveHeight() / n;
-            StdDraw.setPenColor(StdDraw.DARK_GRAY);
-            StdDraw.filledRectangle(750,(150 - (h/2)- ((level.getIdLevel()-1) * h)), 14, 14);
-        }
-        StdDraw.show();
 
-    }
+
 
 }
 

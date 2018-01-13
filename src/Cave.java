@@ -14,7 +14,6 @@ public class Cave {
     }
     public double getCaveHeight() { return caveHeight; }
     public ArrayList<Level> getLevelList() { return levelList; }
-    public ArrayList<Integer> getNList() { return NList; }
 
 
     public Cave(int idCave, double caveHeight) {
@@ -31,7 +30,6 @@ public class Cave {
             beginning = 375;
         if (idCave == 3)
             beginning = 150;
-        Level deposit = new Level(0, null, 400,725); //création du depot = level0, là où l'on dépose les coffres
         for (int i=0; i< n; i++) {
             TreasureChest chest = new TreasureChest(i+1,treasuresPerChest()); //création des coffres
             Level level = new Level(i+1, chest, 400,beginning - (i*h) - (h/2)); //création des niveaux
