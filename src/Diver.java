@@ -372,6 +372,7 @@ public class Diver {
         }
         StdDraw.show();
 
+
         //partie ArrayList
         fonction(cave);
         System.out.println("iii"+cave.getLevelList());
