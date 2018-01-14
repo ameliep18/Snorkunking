@@ -100,39 +100,37 @@ public class Main {
 
 
     private static void displayDiver() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("How many players ?");
-        int nbPlayers = sc.nextInt();
-        System.out.println("How many IA ?");
-        int nbIA = sc.nextInt();
-        int divers = nbPlayers + nbIA;
-
-        if (divers <= 2) {
-            Font font2 = new Font("Arial", Font.BOLD, 15);
-            StdDraw.setFont(font2);
-            for (int i = 1; i <= nbPlayers; i++) {
-                System.out.println("Nom du joueur numéro " + i + " :");
-                Diver diver = new Diver(sc.next(),i,200- ((i - 1) * 70), 725,deposit);
+        int k=1;
+        do {
+            Scanner sc1 = new Scanner(System.in);
+            System.out.println("Player " + k + " : Human or IA ?");
+            System.out.println("Press 'h' for Human or 'i' for IA");
+            if (sc1.next().compareTo("h") == 0) {
+                System.out.println("Enter the name of the player " + k + " :");
+                Diver diver = new Diver(sc1.next(), k, 200 - (k-1)*80, 725, deposit);
                 Diver.playerList.add(diver);
                 StdDraw.setPenColor(StdDraw.WHITE);
-                StdDraw.text(70, 835 - (i * 28), "Player" + i + " : " + diver.getPlayerName());
+                Font font2 = new Font("Arial",Font.BOLD,15);
+                StdDraw.setFont(font2);
+                StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + diver.getPlayerName());
                 StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
-                StdDraw.show();
+                k++;
             }
-            //System.out.println(Diver.diverList);
-            for (int i = 1; i <= nbIA; i++) {
-                String nameIA = "IA " + Integer.toString(i);
-                Diver IA = new Diver(nameIA,i, 300 - ((i - 1) * 70), 725,deposit);
+            else if (sc1.next().compareTo("i") == 0) {
+                String nameIA = "IA " + Integer.toString(k);
+                Diver IA = new Diver(nameIA, k, 200 - (k-1)*80, 725, deposit);
                 Diver.playerList.add(IA);
-                StdDraw.text(200, 835 - (i * 28), "Player" + i + " : " + IA.getPlayerName());
-                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
-                StdDraw.show();
+                StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + IA.getPlayerName());
+                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 30, 30);
+                k++;
             }
-        }
-        else {
-            System.out.println("Please do not enter much than 2 players (diver or IA)");
-            System.out.println("Start again");
-        }
+            else {
+                System.out.println("Please push one of the key asked");
+                displayDiver();
+            }
+        } while (k==2);
+        StdDraw.show();
+
     }
 
     public static void displayReserve() {

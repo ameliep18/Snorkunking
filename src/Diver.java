@@ -79,16 +79,26 @@ public class Diver {
                 Main.cave3.getLevelList().get(n3).getChestList().add(tmp);
                 StdDraw.picture(530 - (i*50), Main.cave3.getLevelList().get(n3).getYLevel(), "coffre aux trésors.png", 25, 25);
             }
-            int newPhase = phase++;
+            /*int newPhase = phase++;
             if (newPhase <=3) {
                 game(newPhase);
             }
             else {
                 //fin du jeu : on affiche les scores et on désigne le vainqueur
                 displayScore();
-
-            }
-            }
+                int score1 = Diver.playerList.get(0).countFinalScore();
+                int score2 = Diver.playerList.get(1).countFinalScore();
+                if (score1>score2) {
+                    System.out.println("Le gagnant est " + Diver.playerList.get(0).getPlayerName() + " !");
+                }
+                else if (score1==score2) {
+                    System.out.println(Diver.playerList.get(0).getPlayerName() + " et " + Diver.playerList.get(1).getPlayerName() + " sont à égalité.");
+                }
+                else {
+                    System.out.println("Le gagnant est " + Diver.playerList.get(1).getPlayerName() + " !");
+                }
+            }*/
+        }
 
 
 
@@ -145,18 +155,19 @@ public class Diver {
                     this.depositList.add(tmp);
                     this.countScore();
                     counter++;
+                }
                     try {  //fait en sorte que l'action de déposer le coffre ne s'effectue qu'une seule fois
                         Thread.sleep(250);
                     }
                     catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
-                System.out.println(this.depositList);
                 this.getChestTransported().clear();
-            }
-       }
-   }
+                System.out.println(this.depositList);
+                }
+        }
+    }
+
 
    public void takeChest(Cave cave, Level playerLevel, int phase) {
         if (playerLevel.getChest() != null) {
@@ -182,30 +193,27 @@ public class Diver {
    }
 
    public void goDown(Cave cave, Level playerLevel) {
-        this.deletePlayer(cave, playerLevel);
-        int n = Cave.NList.get(cave.getIdCave()-1);
-        int idLevelDown = playerLevel.getIdLevel() + 1;
+           this.deletePlayer(cave, playerLevel);
+           int n = Cave.NList.get(cave.getIdCave() - 1);
+           int idLevelDown = playerLevel.getIdLevel() + 1;
 
-        if (idLevelDown <= n) {
-            this.yDiver = cave.getLevelList().get(idLevelDown).getYLevel();
-            this.setPlayerLevel(cave.getLevelList().get(idLevelDown));
-        }
-        else {
-            int newIdCave = cave.getIdCave() + 1;
-            if (newIdCave == 2) {
-                this.yDiver = Main.cave2.getLevelList().get(1).getYLevel();
-                this.setPlayerLevel(Main.cave2.getLevelList().get(1));
-            }
-            else if (newIdCave == 3) {
-                this.yDiver = Main.cave3.getLevelList().get(1).getYLevel();
-                this.setPlayerLevel(Main.cave3.getLevelList().get(1));
+           if (idLevelDown <= n) {
+               this.yDiver = cave.getLevelList().get(idLevelDown).getYLevel();
+               this.setPlayerLevel(cave.getLevelList().get(idLevelDown));
+           } else {
+               int newIdCave = cave.getIdCave() + 1;
+               if (newIdCave == 2) {
+                   this.yDiver = Main.cave2.getLevelList().get(1).getYLevel();
+                   this.setPlayerLevel(Main.cave2.getLevelList().get(1));
+               } else if (newIdCave == 3) {
+                   this.yDiver = Main.cave3.getLevelList().get(1).getYLevel();
+                   this.setPlayerLevel(Main.cave3.getLevelList().get(1));
+               } else {
+                   // on est tout en bas, on ne fait donc rien
+               }
            }
-           else {
-               // on est tout en bas, on ne fait donc rien
-           }
-        }
-        StdDraw.picture(this.getXDiver(), this.getYDiver(), "Plongeur.jpg", 30, 30);
-        StdDraw.show();
+       StdDraw.picture(this.getXDiver(), this.getYDiver(), "Plongeur.jpg", 30, 30);
+       StdDraw.show();
    }
 
    public void goUp(Cave cave, Level playerLevel) {
@@ -214,6 +222,7 @@ public class Diver {
        if (idLevelUp == 0) {
            if (cave.getIdCave() == 1) { //si on est en cave1, on arrivera au dépot
                this.yDiver = 725;
+               this.setPlayerLevel(Main.cave1.getLevelList().get(0));
            }
            else {
                int newIdCave = cave.levelList.get(1).getIdCaveLevel() - 1;
@@ -246,19 +255,19 @@ public class Diver {
             int n = Cave.NList.get(0);
             double h = Main.cave1.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
-            StdDraw.filledRectangle(750,(700 - (h/2)- ((level.getIdLevel()-1) * h)), 14, 14);
+            StdDraw.filledRectangle(750,(700 - (h/2)- ((level.getIdLevel()-1) * h)), 12, 12);
         }
         if (cave.getIdCave() == 2) {
             int n = Cave.NList.get(1);
             double h = Main.cave2.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.GRAY);
-            StdDraw.filledRectangle(750,(375 - (h/2)- ((level.getIdLevel()-1) * h)), 14, 14);
+            StdDraw.filledRectangle(750,(375 - (h/2)- ((level.getIdLevel()-1) * h)), 12, 12);
         }
         if (cave.getIdCave() == 3) {
             int n = Cave.NList.get(2);
             double h = Main.cave3.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.DARK_GRAY);
-            StdDraw.filledRectangle(750,(150 - (h/2)- ((level.getIdLevel()-1) * h)), 14, 14);
+            StdDraw.filledRectangle(750,(150 - (h/2)- ((level.getIdLevel()-1) * h)), 12, 12);
         }
         StdDraw.show();
 
@@ -312,7 +321,8 @@ public class Diver {
 
     public static void displayScore() {
         for (int i=0; i<Diver.playerList.size(); i++) {
-            StdDraw.text(70, 820 - (i*25), "Score : " + Integer.toString(Diver.playerList.get(i).countFinalScore())); //score à afficher
+            StdDraw.setPenColor(StdDraw.WHITE);
+            StdDraw.text(70, 810 - i*40, "Score : " + Integer.toString(Diver.playerList.get(i).countFinalScore())); //score à afficher
         }
     }
 
