@@ -27,15 +27,12 @@ public class Cave {
         ArrayList<Level> levelList = this.levelList;
         if (idCave ==1) {
             beginning = 700;
-            levelList.add(Main.deposit);
         }
         if (idCave == 2) {
             beginning = 375;
-            levelList.add(null);
         }
         if (idCave == 3) {
             beginning = 150;
-            levelList.add(null);
         }
         for (int i=0; i< n; i++) {
             TreasureChest chest = new TreasureChest(i+1,treasuresPerChest()); //création des coffres

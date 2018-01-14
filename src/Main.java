@@ -10,7 +10,6 @@ public class Main {
     public static Cave cave1;
     public static Cave cave2;
     public static Cave cave3;
-    public static Level deposit = new Level(1,0, null, 400,725); //création du depot = level0, là où l'on dépose les coffres
     public static ArrayList<Cave> caveList = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -29,20 +28,21 @@ public class Main {
 
         displayCanvas();
         displayCave();
-        displayLevelAndChests(cave1);
-        displayLevelAndChests(cave2);
-        displayLevelAndChests(cave3);
+        displayLevelsAndChests(cave1);
+        displayLevelsAndChests(cave2);
+        displayLevelsAndChests(cave3);
         displayReserve();
         displayDiver();
-        Diver.game(1);
+        Diver.game();
+
 
 
 
     }
 
-    private static double y1 = 375 + 325/2; //coordonnée y du centre du rectangle représentant la cave1
-    private static double y2 = 150 + 225/2; //coordonnée y du centre du rectangle représentant la cave2
-    private static double y3 = 150/2; //coordonnée y du centre du rectangle représentant la cave3
+    public static double y1 = 375 + 325/2; //coordonnée y du centre du rectangle représentant la cave1
+    public static double y2 = 150 + 225/2; //coordonnée y du centre du rectangle représentant la cave2
+    public  static double y3 = 150/2; //coordonnée y du centre du rectangle représentant la cave3
 
 
     private static void displayCanvas() {
@@ -73,29 +73,29 @@ public class Main {
         StdDraw.show();
     }
 
-    private static void displayLevelAndChests(Cave cave) {
+    public static void displayLevelsAndChests(Cave cave) {
         int n=0;
         double h = 0;
-        //System.out.println(n);
         if (cave.getIdCave() == 1) {
             n = Cave.NList.get(0);
             h = cave1.getCaveHeight() / n;
         }
         if (cave.getIdCave() == 2) {
             n = Cave.NList.get(1);
+            System.out.println(n);
             h = cave2.getCaveHeight() / n;
         }
         if (cave.getIdCave() == 3) {
             n = Cave.NList.get(2);
+            System.out.println(n);
             h = cave3.getCaveHeight() / n;
         }
         StdDraw.setPenColor(StdDraw.WHITE);
         for (int i=0; i<n; i++) {
-            StdDraw.rectangle(cave.getLevelList().get(i+1).getXLevel(), cave.getLevelList().get(i+1).getYLevel(), 400, h/2);
-            StdDraw.picture(750, cave.getLevelList().get(i+1).getYLevel(), "coffre aux trésors.png", 25, 25);
+            StdDraw.rectangle(400, cave.getLevelList().get(i).getYLevel(), 400, h/2);
+            StdDraw.picture(750, cave.getLevelList().get(i).getYLevel(), "coffre aux trésors.png", 25, 25);
         }
         StdDraw.show();
-        //System.out.println(h);
     }
 
 
@@ -107,7 +107,7 @@ public class Main {
             System.out.println("Press 'h' for Human or 'i' for IA");
             if (sc1.next().compareTo("h") == 0) {
                 System.out.println("Enter the name of the player " + k + " :");
-                Diver diver = new Diver(sc1.next(), k, 200 - (k-1)*80, 725, deposit);
+                Diver diver = new Diver(sc1.next(), k, 200 - 80*(k-1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0));
                 Diver.playerList.add(diver);
                 StdDraw.setPenColor(StdDraw.WHITE);
                 Font font2 = new Font("Arial",Font.BOLD,15);
@@ -118,7 +118,7 @@ public class Main {
             }
             else if (sc1.next().compareTo("i") == 0) {
                 String nameIA = "IA " + Integer.toString(k);
-                Diver IA = new Diver(nameIA, k, 200 - (k-1)*80, 725, deposit);
+                Diver IA = new Diver(nameIA, k, 200 - 80*(k-1) , cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0));
                 Diver.playerList.add(IA);
                 StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + IA.getPlayerName());
                 StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 30, 30);
