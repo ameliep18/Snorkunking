@@ -14,4 +14,6 @@ public class TreasureChest {
     public int getTreasures() {
         return treasures;
     }
+
+
 }

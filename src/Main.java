@@ -1,6 +1,7 @@
 
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -9,7 +10,8 @@ public class Main {
     public static Cave cave1;
     public static Cave cave2;
     public static Cave cave3;
-    public static Level deposit = new Level(0, null, 400,725); //création du depot = level0, là où l'on dépose les coffres
+    public static Level deposit = new Level(1,0, null, 400,725); //création du depot = level0, là où l'on dépose les coffres
+    public static ArrayList<Cave> caveList = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -18,6 +20,10 @@ public class Main {
         cave1 = new Cave(1, 325);
         cave2 = new Cave(2,225);
         cave3 = new Cave(3,150);
+        Reserve reserve = new Reserve(cave1, cave2,cave3);
+        caveList.add(cave1);
+        caveList.add(cave2);
+        caveList.add(cave3);
 
 
 
@@ -26,8 +32,10 @@ public class Main {
         displayLevelAndChests(cave1);
         displayLevelAndChests(cave2);
         displayLevelAndChests(cave3);
+        displayReserve();
         displayDiver();
-        //Diver.diverList.get(0).play(cave1,1);
+        Diver.game(1);
+
 
 
     }
@@ -83,11 +91,11 @@ public class Main {
         }
         StdDraw.setPenColor(StdDraw.WHITE);
         for (int i=0; i<n; i++) {
-            StdDraw.rectangle(cave.getLevelList().get(i).getXLevel(), cave.getLevelList().get(i).getYLevel(), 400, h/2);
-            StdDraw.picture(750, cave.getLevelList().get(i).getYLevel(), "coffre aux trésors.jpg", 25, 25);
+            StdDraw.rectangle(cave.getLevelList().get(i+1).getXLevel(), cave.getLevelList().get(i+1).getYLevel(), 400, h/2);
+            StdDraw.picture(750, cave.getLevelList().get(i+1).getYLevel(), "coffre aux trésors.png", 25, 25);
         }
         StdDraw.show();
-        System.out.println(h);
+        //System.out.println(h);
     }
 
 
@@ -105,20 +113,18 @@ public class Main {
             for (int i = 1; i <= nbPlayers; i++) {
                 System.out.println("Nom du joueur numéro " + i + " :");
                 Diver diver = new Diver(sc.next(),i,200- ((i - 1) * 70), 725,deposit);
-                Diver.diverList.add(diver);
+                Diver.playerList.add(diver);
+                StdDraw.setPenColor(StdDraw.WHITE);
                 StdDraw.text(70, 835 - (i * 28), "Player" + i + " : " + diver.getPlayerName());
-                StdDraw.text(70, 820 - (i * 25), "Score : " + Integer.toString(0)); //score à afficher
                 StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
-                //System.out.println(diver.getPlayerName());
             }
             //System.out.println(Diver.diverList);
             for (int i = 1; i <= nbIA; i++) {
                 String nameIA = "IA " + Integer.toString(i);
                 Diver IA = new Diver(nameIA,i, 300 - ((i - 1) * 70), 725,deposit);
-                Diver.IAList.add(IA);
+                Diver.playerList.add(IA);
                 StdDraw.text(200, 835 - (i * 28), "Player" + i + " : " + IA.getPlayerName());
-                StdDraw.text(200, 820 - (i * 25), "Score : " + Integer.toString(0)); //score à afficher
                 StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
                 StdDraw.show();
             }
@@ -128,6 +134,18 @@ public class Main {
             System.out.println("Start again");
         }
     }
+
+    public static void displayReserve() {
+        int n = Reserve.oxygen;
+        StdDraw.filledRectangle(690,790, 2*n, 10);
+        StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
+        for (int i=0; i<n; i++)
+            StdDraw.filledRectangle((690-n) + ((2*i)+1),790,2,9);
+        StdDraw.show();
+
+    }
+
+
 
 
 

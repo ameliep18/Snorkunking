@@ -6,6 +6,7 @@ public class Cave {
     private int idCave;
     private double caveHeight;
     private int nbLevels;
+
     public ArrayList<Level> levelList = new ArrayList<>();
     public static ArrayList<Integer> NList = new ArrayList<>();
 
@@ -24,18 +25,24 @@ public class Cave {
         double h = caveHeight/n; //hauteur des niveaux
         double beginning = 0;
         ArrayList<Level> levelList = this.levelList;
-        if (idCave ==1)
+        if (idCave ==1) {
             beginning = 700;
-        if (idCave == 2)
+            levelList.add(Main.deposit);
+        }
+        if (idCave == 2) {
             beginning = 375;
-        if (idCave == 3)
+            levelList.add(null);
+        }
+        if (idCave == 3) {
             beginning = 150;
+            levelList.add(null);
+        }
         for (int i=0; i< n; i++) {
             TreasureChest chest = new TreasureChest(i+1,treasuresPerChest()); //création des coffres
-            Level level = new Level(i+1, chest, 400,beginning - (i*h) - (h/2)); //création des niveaux
+            Level level = new Level(idCave,i+1, chest, 400,beginning - (i*h) - (h/2)); //création des niveaux
             levelList.add(level);
         }
-        System.out.println(n);
+        //System.out.println(n);
         //System.out.println(NList);
     }
 

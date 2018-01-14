@@ -1,11 +1,15 @@
+import edu.princeton.cs.introcs.StdDraw;
+
 public class Reserve {
 
-	private int oxygen;
-	public static int reserve;
+	public static int oxygen;
 
-	public Reserve(Cave cave) {
-	    //this.oxygen = oxygen;
-	    Reserve.reserve =  2*Cave.NList.get(cave.getIdCave()-1);
+	public Reserve(Cave cave1, Cave cave2, Cave cave3) {
+        int n1 = Cave.NList.get(0);
+        int n2 = Cave.NList.get(1);
+        int n3 = Cave.NList.get(2);
+        int N = n1+n2+n3;
+        this.oxygen = 2*N;
 	}
 
 	public int getOxygen() {
@@ -18,9 +22,10 @@ public class Reserve {
 		return reserve;
 	}
 
-	public static int oxygenConsuption(int nbCoffres, int oxygene) {
-		oxygene = oxygene - (1 + nbCoffres);
-		return oxygene;
-	}
+	public static int oxygenConsumption(int nbCoffres, int oxygen) {
+        int drop = 1 + nbCoffres;
+        oxygen = oxygen - drop;
+        return oxygen;
+    }
 
 } //ferme la classe
