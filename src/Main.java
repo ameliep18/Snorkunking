@@ -24,8 +24,6 @@ public class Main {
         caveList.add(cave2);
         caveList.add(cave3);
 
-
-
         displayCanvas();
         displayCave();
         displayLevelsAndChests(cave1);
@@ -34,10 +32,6 @@ public class Main {
         displayReserve();
         displayDiver();
         Diver.game();
-
-
-
-
     }
 
     public static double y1 = 375 + 325/2; //coordonnée y du centre du rectangle représentant la cave1
@@ -113,7 +107,7 @@ public class Main {
                 Font font2 = new Font("Arial",Font.BOLD,15);
                 StdDraw.setFont(font2);
                 StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + diver.getPlayerName());
-                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
+                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
                 k++;
             }
             else if (sc1.next().compareTo("i") == 0) {
@@ -121,8 +115,11 @@ public class Main {
                 Diver IA = new Diver(nameIA, k, 200 - 80*(k-1) , cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0));
                 Diver.playerList.add(IA);
                 StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + IA.getPlayerName());
-                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.jpg", 30, 30);
+                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "IA.png", 30, 30);
                 k++;
+            }
+            else if (sc1.next().compareTo("i") == 1 ||  sc1.next().compareTo("h") == 1){
+                System.out.println("Veuillez choisir h ou i seulement");
             }
             else {
                 System.out.println("Please push one of the key asked");
@@ -130,7 +127,6 @@ public class Main {
             }
         } while (k==2);
         StdDraw.show();
-
     }
 
     public static void displayReserve() {
@@ -140,14 +136,7 @@ public class Main {
         for (int i=0; i<n; i++)
             StdDraw.filledRectangle((690-n) + ((2*i)+1),790,2,9);
         StdDraw.show();
-
     }
-
-
-
-
-
-
 }
 
 
