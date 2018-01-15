@@ -34,6 +34,10 @@ public class Level {
 
     public void setYLevel(double yLevel) { this.yLevel = yLevel; }
 
+    public void setIdLevel(int idLevel) {
+        this.idLevel = idLevel;
+    }
+
     public Level(int idCaveLevel,int idLevel, TreasureChest chest, double xLevel, double yLevel) {
         this.idCaveLevel = idCaveLevel;
         this.idLevel = idLevel;
