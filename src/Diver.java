@@ -334,7 +334,7 @@ public class Diver {
                    // on est tout en bas, on ne fait donc rien
                }
            }
-       StdDraw.picture(this.getXDiver(), this.getYDiver(), "Plongeur.jpg", 30, 30);
+       StdDraw.picture(this.getXDiver(), this.getYDiver(), "Plongeur.png", 30, 30);
        StdDraw.show();
    }
 
@@ -364,7 +364,7 @@ public class Diver {
            this.yDiver = cave.getLevelList().get(idLevelUp-1).getYLevel();
            this.setPlayerLevel(cave.getLevelList().get(idLevelUp-1));
        }
-       StdDraw.picture(this.getXDiver(), this.getYDiver(), "Plongeur.jpg", 30, 30);
+       StdDraw.picture(this.getXDiver(), this.getYDiver(), "Plongeur.png", 30, 30);
        StdDraw.show();
 
    }
