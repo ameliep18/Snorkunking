@@ -68,11 +68,11 @@ public class Diver {
             StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
             StdDraw.filledRectangle(400, 725, 400, 25);
             StdDraw.show();
-            int n3 = Cave.NList.get(2);
+            int n3 = Cave.NList.get(3);
             Random rnd = new Random();
             int r = rnd.nextInt(2);
             StdDraw.setPenColor(StdDraw.WHITE);
-            StdDraw.text(400, 725, Diver.playerList.get(r).getPlayerName() + " STARTS");
+            StdDraw.text(400, 760, Diver.playerList.get(r).getPlayerName() + " STARTS");
             StdDraw.show();
 
             while (Reserve.oxygen > 0) {
@@ -90,13 +90,13 @@ public class Diver {
                 } else {
                     if (sortPlayers() == 1) {
                         StdDraw.setPenColor(StdDraw.WHITE);
-                        StdDraw.text(400, 725, Diver.playerList.get(0).getPlayerName() + " STARTS");
+                        StdDraw.text(400, 760, Diver.playerList.get(0).getPlayerName() + " STARTS");
                         playerList.get(0).whichPlayFunction(phase); //joueur 1 joue en premier
                         playerList.get(1).whichPlayFunction(phase);
 
                     } else if (sortPlayers() == 2) {
                         StdDraw.setPenColor(StdDraw.WHITE);
-                        StdDraw.text(400, 725, Diver.playerList.get(1).getPlayerName() + " STARTS");
+                        StdDraw.text(400, 760, Diver.playerList.get(1).getPlayerName() + " STARTS");
                         playerList.get(1).whichPlayFunction(phase); //joueur 2 joue en premier
                         playerList.get(0).whichPlayFunction(phase);
 
@@ -118,33 +118,21 @@ public class Diver {
                 phase++;
                 if (phase <= 3) {
                     //on fait tomber dans le dernier niveau de la cave3 les coffres que portaient les joueurs
-                    int N1 = playerList.get(0).getChestTransported().size(); //nb de coffre transportes par le joueur 1
-                    TreasureChest tmp;
-                    for (int i = 0; i < N1; i++) {
-                        tmp = playerList.get(0).getChestTransported().get(i);
-                        Main.cave3.getLevelList().get(n3 - 1).getChestList().add(tmp);
-                        StdDraw.picture(690 - (i * 50) - ((phase - 1) * 50), Main.cave3.getLevelList().get(n3 - 1).getYLevel(), "coffre aux trésors.png", 25, 25);
-                    }
-                    int N2 = playerList.get(1).getChestTransported().size(); //nb de coffre transportes par le joueur 2
-                    for (int i = 1; i <= N2; i++) {
-                        tmp = playerList.get(1).getChestTransported().get(i - 1);
-                        Main.cave3.getLevelList().get(n3 - 1).getChestList().add(tmp);
-                        StdDraw.picture(530 - (i * 50) - ((phase - 1) * 50), Main.cave3.getLevelList().get(n3 - 1).getYLevel(), "coffre aux trésors.png", 25, 25);
-                    }
-                    StdDraw.show();
+                    playerList.get(0).looseChests();
+                    playerList.get(1).looseChests();
 
                     //on initialise pour la phase suivante
                     deleteLevelWithoutChest(Main.cave1);
                     int newn1 = Main.cave1.getLevelList().size();
-                    Cave.NList.set(0, newn1); //on modifie la NList
+                    Cave.NList.set(1, newn1); //on modifie la NList
 
                     deleteLevelWithoutChest(Main.cave2);
                     int newn2 = Main.cave2.getLevelList().size();
-                    Cave.NList.set(1, newn2);
+                    Cave.NList.set(2, newn2);
 
                     deleteLevelWithoutChest(Main.cave3);
                     int newn3 = Main.cave3.getLevelList().size();
-                    Cave.NList.set(2, newn3);
+                    Cave.NList.set(3, newn3);
 
                     int N = newn1 + newn2 + newn3;
                     Reserve.oxygen = 2 * N; //nouvelle réserve
@@ -179,7 +167,7 @@ public class Diver {
                 StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
                 StdDraw.filledRectangle(400, 725, 400, 25);
                 StdDraw.setPenColor(StdDraw.WHITE);
-                StdDraw.text(400, 725, "AND THE WINNER IS... " + Diver.playerList.get(0).getPlayerName() + " !");
+                StdDraw.text(400, 760, "AND THE WINNER IS... " + Diver.playerList.get(0).getPlayerName() + " !");
                 StdDraw.show();
             }
             else if (score1==score2) {
@@ -187,7 +175,7 @@ public class Diver {
                 StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
                 StdDraw.filledRectangle(400, 725, 400, 25);
                 StdDraw.setPenColor(StdDraw.WHITE);
-                StdDraw.text(400, 725, Diver.playerList.get(0).getPlayerName() + " AND " + Diver.playerList.get(1).getPlayerName() + " 's SCORES ARE EQUALS" + " !");
+                StdDraw.text(400, 760, Diver.playerList.get(0).getPlayerName() + " AND " + Diver.playerList.get(1).getPlayerName() + " 's SCORES ARE EQUALS" + " !");
                 StdDraw.show();
             }
             else {
@@ -195,7 +183,7 @@ public class Diver {
                 StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
                 StdDraw.filledRectangle(400, 725, 400, 25);
                 StdDraw.setPenColor(StdDraw.WHITE);
-                StdDraw.text(400, 725, "AND THE WINNER IS... " + Diver.playerList.get(1).getPlayerName() + " !");
+                StdDraw.text(400, 760, "AND THE WINNER IS... " + Diver.playerList.get(1).getPlayerName() + " !");
                 StdDraw.show();
             }
         }
@@ -204,7 +192,7 @@ public class Diver {
 
 
     public void humanPlay(int phase) {
-        //int n = Cave.NList.get(cave.getIdCave() - 1); //nombre de niveaux dans la cave
+        //int n = Cave.NList.get(cave.getIdCave()); //nombre de niveaux dans la cave
         int counter = 0;
         while (counter == 0) {
             if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN) == true) {
@@ -244,7 +232,7 @@ public class Diver {
                     e.printStackTrace();
                 }
             }
-            if (this.playerLevel == Main.cave1.getLevelList().get(0) &&(StdDraw.isKeyPressed(KeyEvent.VK_SPACE) == true)) { //deposer le(s) coffre(s) dans le dépot
+            if (this.playerLevel == Main.cave0.getLevelList().get(0)) { //deposer le(s) coffre(s) dans le dépot
                 System.out.println("Joueur " + this.getPlayerName() + " dépose ses coffres");
                 validateChest();
                 this.countScore();
@@ -283,6 +271,11 @@ public class Diver {
                 }
                 counter++;
             }
+            try { //fait en sorte que l'action ne s'effectue qu'une seule fois
+                Thread.sleep(250);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -292,19 +285,18 @@ public class Diver {
    public void takeChest(Cave cave, Level playerLevel, int phase) {
         if (playerLevel.getChest() != null) {
             this.getChestTransported().add(cave.getLevelList().get(playerLevel.getIdLevel()-1).getChest());
+            deleteChest(cave, playerLevel, cave.getLevelList().get(playerLevel.getIdLevel() - 1).getChest(), phase);
             playerLevel.setChest(null);
-            deleteChest(cave,playerLevel);
             System.out.println("Joueur " + this.getPlayerName()+ " : " + this.getChestTransported());
-        }
-        else if (playerLevel.getIdCaveLevel() == 3 && playerLevel.getIdLevel() == Cave.NList.get(2)) { //si on est dans le dernier niveau de la cave3
+        } else if (playerLevel.getIdCaveLevel() == 3 && playerLevel.getIdLevel() == Cave.NList.get(3)) { //si on est dans le dernier niveau de la cave3
             if (phase!=1) {
                 Random rnd = new Random();
                 int min = 0;
-                int max = Main.cave3.getLevelList().get(Cave.NList.get(2)).getChestList().size();
+                int max = Main.cave3.getLevelList().get(Cave.NList.get(3)).getChestList().size() - 1;
                 int k = rnd.nextInt(max - min + 1) + min;
-                this.getChestTransported().add(Main.cave3.getLevelList().get(Cave.NList.get(2)-1).getChestList().get(k));
-                playerLevel.setChest(null);
-                deleteChest(cave,playerLevel);
+                this.getChestTransported().add(Main.cave3.getLevelList().get(Cave.NList.get(3) - 1).getChestList().get(k));
+                playerLevel.getChestList().remove(k);
+                deleteChest(cave, playerLevel, Main.cave3.getLevelList().get(Cave.NList.get(3) - 1).getChestList().get(k), phase);
             }
         }
         else {
@@ -314,7 +306,7 @@ public class Diver {
 
    public void goDown(Cave cave, Level playerLevel) {
            this.deletePlayer(cave, playerLevel);
-           int n = Cave.NList.get(cave.getIdCave() - 1);
+       int n = Cave.NList.get(cave.getIdCave());
            int idLevelDown = playerLevel.getIdLevel() + 1;
 
            if (idLevelDown <= n) {
@@ -322,11 +314,15 @@ public class Diver {
                this.setPlayerLevel(cave.getLevelList().get(idLevelDown-1));
            } else {
                int newIdCave = cave.getIdCave() + 1;
+               if (newIdCave == 1) {
+                   this.yDiver = Main.cave1.getLevelList().get(0).getYLevel();
+                   this.setPlayerLevel(Main.cave1.getLevelList().get(0));
+               }
                if (newIdCave == 2) {
                    this.yDiver = Main.cave2.getLevelList().get(0).getYLevel();
                    this.setPlayerLevel(Main.cave2.getLevelList().get(0));
                }
-               else if (newIdCave == 3) {
+               if (newIdCave == 3) {
                    this.yDiver = Main.cave3.getLevelList().get(0).getYLevel();
                    this.setPlayerLevel(Main.cave3.getLevelList().get(0));
                }
@@ -342,16 +338,21 @@ public class Diver {
        this.deletePlayer(cave, playerLevel);
        int idLevelUp = playerLevel.getIdLevel() - 1;
        if (idLevelUp == 0) {
-           if (cave.getIdCave() == 1) { //si on est en cave1, on ne fait rien
+           if (cave.getIdCave() == 0) {
+               //on ne fait rien
+           } else if (cave.getIdCave() == 1) {
+               //si on est en cave1, on monte au deposit
+               this.yDiver = Main.cave0.getLevelList().get(0).getYLevel();
+               this.setPlayerLevel(Main.cave0.getLevelList().get(0));
            } else {
                int newIdCave = cave.levelList.get(0).getIdCaveLevel() - 1;
                if (newIdCave == 1) {
-                   int n1 = Cave.NList.get(0);
+                   int n1 = Cave.NList.get(1);
                    this.yDiver = Main.cave1.getLevelList().get(n1 - 1).getYLevel();
                    this.setPlayerLevel(Main.cave1.getLevelList().get(n1 - 1));
                }
                else if (newIdCave == 2) {
-                   int n2 = Cave.NList.get(1);
+                   int n2 = Cave.NList.get(2);
                    this.yDiver = Main.cave2.getLevelList().get(n2 - 1).getYLevel();
                    this.setPlayerLevel(Main.cave2.getLevelList().get(n2 - 1));
                }
@@ -377,24 +378,28 @@ public class Diver {
         this.getChestTransported().clear();
     }
 
-    private static void deleteChest(Cave cave, Level level) {
+    private static void deleteChest(Cave cave, Level level, TreasureChest chest, int phase) {
         if (cave.getIdCave() == 1) {
-            int n = Cave.NList.get(0);
+            int n = Cave.NList.get(1);
             double h = Main.cave1.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
-            StdDraw.filledRectangle(750, (700 - (h / 2) - ((level.getIdLevel() - 1) * h)), 12, 12);
+            StdDraw.filledRectangle(chest.getXChest(), (700 - (h / 2) - ((level.getIdLevel() - 1) * h)), 12, 12);
         }
         if (cave.getIdCave() == 2) {
-            int n = Cave.NList.get(1);
+            int n = Cave.NList.get(2);
             double h = Main.cave2.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.GRAY);
-            StdDraw.filledRectangle(750, (375 - (h / 2) - ((level.getIdLevel() - 1) * h)), 12, 11.8);
+            StdDraw.filledRectangle(chest.getXChest(), (375 - (h / 2) - ((level.getIdLevel() - 1) * h)), 12, 11.9);
         }
         if (cave.getIdCave() == 3) {
-            int n = Cave.NList.get(2);
+            int n = Cave.NList.get(3);
             double h = Main.cave3.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.DARK_GRAY);
-            StdDraw.filledRectangle(750,(150 - (h/2)- ((level.getIdLevel()-1) * h)), 12, 12);
+            if (level == cave.getLevelList().get(n - 1) && phase > 1) {
+                StdDraw.filledRectangle(chest.getXChest(), (150 - (h / 2) - ((level.getIdLevel() - 1) * h)), 12, 12);
+            } else {
+                StdDraw.filledRectangle(chest.getXChest(), (150 - (h / 2) - ((level.getIdLevel() - 1) * h)), 12, 12);
+            }
         }
         StdDraw.show();
 
@@ -402,19 +407,19 @@ public class Diver {
 
     private void deletePlayer(Cave cave, Level level) {
         if (cave.getIdCave() == 1) {
-            int n = Cave.NList.get(0);
+            int n = Cave.NList.get(1);
             double h = Main.cave1.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
             StdDraw.filledRectangle(this.getXDiver(), (700 - (h / 2) - ((level.getIdLevel() - 1) * h)), 15, 10);
         }
         if (cave.getIdCave() == 2) {
-            int n = Cave.NList.get(1);
+            int n = Cave.NList.get(2);
             double h = Main.cave2.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.GRAY);
             StdDraw.filledRectangle(this.getXDiver(), (375 - (h / 2) - ((level.getIdLevel() - 1) * h)), 15, 10);
         }
         if (cave.getIdCave() == 3) {
-            int n = Cave.NList.get(2);
+            int n = Cave.NList.get(3);
             double h = Main.cave3.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.DARK_GRAY);
             StdDraw.filledRectangle(this.getXDiver(), (150 - (h / 2) - ((level.getIdLevel() - 1) * h)), 15, 10);
@@ -452,7 +457,7 @@ public class Diver {
             StdDraw.filledRectangle(400,Main.y2, 400, Main.cave2.getCaveHeight()/2);
         }
         if (cave.getIdCave() == 3) {
-            double n = Cave.NList.get(2);
+            double n = Cave.NList.get(3);
             double h = Main.cave3.getCaveHeight() / n;
             StdDraw.setPenColor(StdDraw.DARK_GRAY);
             StdDraw.filledRectangle(400,Main.y3, 400, (Main.cave3.getCaveHeight()-h-30)/2);
@@ -464,10 +469,10 @@ public class Diver {
     }
 
     public static void deleteEmptyLevels(Cave cave) {
-        int n = Cave.NList.get(cave.getIdCave()-1);
+        int n = Cave.NList.get(cave.getIdCave());
         int counter=0;
         while (counter != n - 1) {
-            if (cave.getLevelList().size() > 1) {
+            if (cave.getLevelList().size() > 1) { //voir si c'est ok'
                 if (cave.getLevelList().get(0).getChest() == null) {
                     cave.getLevelList().remove(0);
                 }
@@ -521,5 +526,24 @@ public class Diver {
         if (this.getDiverType().compareTo("i") == 0) { //si le joueur est une IA
             IAPlay(phase);
         }
+    }
+
+    public void looseChests() {
+        int n3 = Cave.NList.get(3);
+        System.out.println(this.getChestTransported());
+        int N = this.getChestTransported().size(); //nb de coffre transportes par le joueur 1
+        System.out.println("size " + N);
+        TreasureChest tmp;
+        for (int i = 0; i < N; i++) {
+            tmp = this.getChestTransported().get(i);
+            System.out.println("tmp" + i + " : " + tmp);
+            Main.cave3.getLevelList().get(n3 - 1).getChestList().add(tmp);
+            System.out.println("chestList " + Main.cave3.getLevelList().get(n3 - 1).getChestList());
+            System.out.println("apres avoir enlevé tmp" + this.getChestTransported());
+            tmp.setXChest(750 - ((this.idPlayer - 1) * 200) - ((i + 1) * 50));
+            StdDraw.picture(tmp.getXChest(), Main.cave3.getLevelList().get(n3 - 1).getYLevel(), "coffre aux trésors.png", 25, 25);
+        }
+        this.getChestTransported().clear();
+        StdDraw.show();
     }
 }

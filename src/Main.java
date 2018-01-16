@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static Cave cave0;
     public static Cave cave1;
     public static Cave cave2;
     public static Cave cave3;
@@ -16,6 +17,7 @@ public class Main {
 
         //initialisation
 
+        cave0 = new Cave(0, 50);
         cave1 = new Cave(1, 325);
         cave2 = new Cave(2,225);
         cave3 = new Cave(3,150);
@@ -23,8 +25,6 @@ public class Main {
         caveList.add(cave1);
         caveList.add(cave2);
         caveList.add(cave3);
-
-
 
         displayCanvas();
         displayCave();
@@ -78,38 +78,42 @@ public class Main {
     }
 
     private static void displayCave() {
+        StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
+        StdDraw.filledRectangle(400, 725, 400, 25);
         StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
         StdDraw.filledRectangle(400, y1, 400, 325/2);
         StdDraw.setPenColor(StdDraw.GRAY);
         StdDraw.filledRectangle(400, y2, 400, 225/2);
         StdDraw.setPenColor(StdDraw.DARK_GRAY);
         StdDraw.filledRectangle(400, y3, 400, 150/2);
-        StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
-        StdDraw.filledRectangle(400, 725, 400, 25);
         StdDraw.show();
     }
 
     public static void displayLevelsAndChests(Cave cave) {
         int n=0;
         double h = 0;
-        if (cave.getIdCave() == 1) {
-            n = Cave.NList.get(0);
-            h = cave1.getCaveHeight() / n;
-        }
-        if (cave.getIdCave() == 2) {
-            n = Cave.NList.get(1);
-            System.out.println(n);
-            h = cave2.getCaveHeight() / n;
-        }
-        if (cave.getIdCave() == 3) {
-            n = Cave.NList.get(2);
-            System.out.println(n);
-            h = cave3.getCaveHeight() / n;
-        }
-        StdDraw.setPenColor(StdDraw.WHITE);
-        for (int i=0; i<n; i++) {
-            StdDraw.rectangle(400, cave.getLevelList().get(i).getYLevel(), 400, h/2);
-            StdDraw.picture(750, cave.getLevelList().get(i).getYLevel(), "coffre aux trésors.png", 25, 25);
+        if (cave.getIdCave() == 0) {
+            //on affiche rien
+        } else {
+            if (cave.getIdCave() == 1) {
+                n = Cave.NList.get(1);
+                h = cave1.getCaveHeight() / n;
+            }
+            if (cave.getIdCave() == 2) {
+                n = Cave.NList.get(2);
+                System.out.println(n);
+                h = cave2.getCaveHeight() / n;
+            }
+            if (cave.getIdCave() == 3) {
+                n = Cave.NList.get(3);
+                System.out.println(n);
+                h = cave3.getCaveHeight() / n;
+            }
+            StdDraw.setPenColor(StdDraw.WHITE);
+            for (int i = 0; i < n; i++) {
+                StdDraw.rectangle(400, cave.getLevelList().get(i).getYLevel(), 400, h / 2);
+                StdDraw.picture(750, cave.getLevelList().get(i).getYLevel(), "coffre aux trésors.png", 25, 25);
+            }
         }
         StdDraw.show();
     }

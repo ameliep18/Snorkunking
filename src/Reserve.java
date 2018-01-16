@@ -8,7 +8,7 @@ public class Reserve {
         int n2 = Cave.NList.get(1);
         int n3 = Cave.NList.get(2);
         int N = n1+n2+n3;
-        this.oxygen = 2*N;
+		this.oxygen = 4 * N;
 	}
 
 	public int getOxygen() {
