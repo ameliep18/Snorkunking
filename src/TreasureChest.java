@@ -1,11 +1,11 @@
 
 public class TreasureChest {
 
-    private int idChest;
+    private int xChest;
     private int treasures;
 
 
-	public TreasureChest(int idChest, int treasures) {
+    public TreasureChest(int xChest, int treasures) {
         this.treasures = treasures;
     }
 
@@ -14,4 +14,11 @@ public class TreasureChest {
     }
 
 
+    public int getXChest() {
+        return xChest;
+    }
+
+    public void setXChest(int xChest) {
+        this.xChest = xChest;
+    }
 }
