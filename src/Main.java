@@ -50,10 +50,6 @@ public class Main {
         StdDraw.show();
 
         Diver.game();
-
-
-
-
     }
 
     public static double y1 = 375 + 325/2; //coordonnée y du centre du rectangle représentant la cave1
@@ -149,7 +145,6 @@ public class Main {
             else {
                 System.out.println("Please push one of the key asked");
                 displayDiverInit();
-
             }
 
         }
@@ -166,8 +161,6 @@ public class Main {
         StdDraw.show();
 
     }
-
-
 }
 
 
