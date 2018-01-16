@@ -472,7 +472,7 @@ public class Diver {
         int n = Cave.NList.get(cave.getIdCave());
         int counter=0;
         while (counter != n - 1) {
-            if (cave.getLevelList().size() > 1) { //voir si c'est ok'
+            if (cave.getLevelList().size() > 0) { //voir si c'est ok
                 if (cave.getLevelList().get(0).getChest() == null) {
                     cave.getLevelList().remove(0);
                 }
