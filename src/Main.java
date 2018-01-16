@@ -41,12 +41,12 @@ public class Main {
         Diver IA1 = new Diver("IA 1", 1, 200 - 80 * (1 - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "i");
         Diver.playerList.add(IA1);
         StdDraw.text(70, 830 - (1 - 1) * 40, "Player" + 1 + " : " + IA1.getPlayerName());
-        StdDraw.picture(IA1.getXDiver(), IA1.getYDiver(), "Plongeur.jpg", 30, 30);
+        StdDraw.picture(IA1.getXDiver(), IA1.getYDiver(), "Plongeur.png", 30, 30);
 
         Diver IA2 = new Diver("IA 2", 2, 200 - 80 * (2 - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "i");
         Diver.playerList.add(IA2);
         StdDraw.text(70, 830 - (2 - 1) * 40, "Player" + 2 + " : " + IA2.getPlayerName());
-        StdDraw.picture(IA2.getXDiver(), IA2.getYDiver(), "Plongeur.jpg", 30, 30);
+        StdDraw.picture(IA2.getXDiver(), IA2.getYDiver(), "Plongeur.png", 30, 30);
         StdDraw.show();
 
         Diver.game();
@@ -130,7 +130,7 @@ public class Main {
                 Font font2 = new Font("Arial",Font.BOLD,15);
                 StdDraw.setFont(font2);
                 StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + diver.getPlayerName());
-                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.jpg", 30, 30); //affiche le plongeur sur la ligne de départ
+                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
                 k++;
 
             }
@@ -139,7 +139,7 @@ public class Main {
                 Diver IA = new Diver(nameIA, k, 200 - 80 * (k - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "i");
                 Diver.playerList.add(IA);
                 StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + IA.getPlayerName());
-                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "Plongeur.jpg", 30, 30);
+                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "Plongeur.png", 30, 30);
                 k++;
             }
             else {
