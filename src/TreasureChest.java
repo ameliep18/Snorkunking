@@ -4,7 +4,6 @@ public class TreasureChest {
     private int idChest;
     private int treasures;
 
-
 	public TreasureChest(int idChest, int treasures) {
         this.treasures = treasures;
     }
@@ -12,6 +11,4 @@ public class TreasureChest {
     public int getTreasures() {
         return treasures;
     }
-
-
 }
