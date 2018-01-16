@@ -6,6 +6,7 @@ public class TreasureChest {
 
 
     public TreasureChest(int xChest, int treasures) {
+        this.xChest = xChest;
         this.treasures = treasures;
     }
 

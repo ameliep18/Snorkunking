@@ -39,7 +39,7 @@ public class Cave {
                 beginning = 150;
             }
             for (int i = 0; i < n; i++) {
-                TreasureChest chest = new TreasureChest(treasuresPerChest(), 750); //création des coffres
+                TreasureChest chest = new TreasureChest(750, 750); //création des coffres
                 Level level = new Level(idCave, i + 1, chest, 400, beginning - (i * h) - (h / 2)); //création des niveaux
                 levelList.add(level);
             }
