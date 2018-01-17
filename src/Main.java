@@ -1,6 +1,7 @@
 
 import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +17,6 @@ public class Main {
     public static void main(String[] args) {
 
         //initialisation
-
         cave0 = new Cave(0, 50);
         cave1 = new Cave(1, 325);
         cave2 = new Cave(2,225);
@@ -26,29 +26,19 @@ public class Main {
         caveList.add(cave2);
         caveList.add(cave3);
 
+        //affichage
+        displayMenu();
+        askForDivers();
         displayCanvas();
         displayCave();
+        displayLevelsAndChests(cave0);
         displayLevelsAndChests(cave1);
         displayLevelsAndChests(cave2);
         displayLevelsAndChests(cave3);
         displayReserve();
+        displayDiverInit();
 
-        //displayDiverInit();
-        StdDraw.setPenColor(StdDraw.WHITE);
-        Font font2 = new Font("Arial", Font.BOLD, 15);
-        StdDraw.setFont(font2);
-
-        Diver IA1 = new Diver("IA 1", 1, 200 - 80 * (1 - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "i");
-        Diver.playerList.add(IA1);
-        StdDraw.text(70, 830 - (1 - 1) * 40, "Player" + 1 + " : " + IA1.getPlayerName());
-        StdDraw.picture(IA1.getXDiver(), IA1.getYDiver(), "Plongeur.png", 30, 30);
-
-        Diver IA2 = new Diver("IA 2", 2, 200 - 80 * (2 - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "i");
-        Diver.playerList.add(IA2);
-        StdDraw.text(70, 830 - (2 - 1) * 40, "Player" + 2 + " : " + IA2.getPlayerName());
-        StdDraw.picture(IA2.getXDiver(), IA2.getYDiver(), "Plongeur.png", 30, 30);
-        StdDraw.show();
-
+        //jeu
         Diver.game();
     }
 
@@ -57,10 +47,17 @@ public class Main {
     public  static double y3 = 150/2; //coordonnée y du centre du rectangle représentant la cave3
 
 
-    private static void displayCanvas() {
+    private static void displayMenu() {
         StdDraw.setCanvasSize(800, 900);
         StdDraw.setXscale(0, 800);
         StdDraw.setYscale(0, 900);
+        StdDraw.picture(400, 450, "menu.jpg", 600, 800);
+        StdDraw.show();
+    }
+
+
+    private static void displayCanvas() {
+        StdDraw.clear();
         StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
         StdDraw.filledRectangle(0, 0, 800, 900);
         StdDraw.setPenColor(StdDraw.WHITE);
@@ -74,8 +71,6 @@ public class Main {
     }
 
     private static void displayCave() {
-        StdDraw.setPenColor(StdDraw.PRINCETON_ORANGE);
-        StdDraw.filledRectangle(400, 725, 400, 25);
         StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
         StdDraw.filledRectangle(400, y1, 400, 325/2);
         StdDraw.setPenColor(StdDraw.GRAY);
@@ -88,24 +83,26 @@ public class Main {
     public static void displayLevelsAndChests(Cave cave) {
         int n=0;
         double h = 0;
-        if (cave.getIdCave() == 0) {
-            //on affiche rien
+        if (cave == cave0) {
+            n = Cave.NList.get(0);
+            h = cave0.getCaveHeight() / n;
+            StdDraw.setPenColor(StdDraw.WHITE);
+            StdDraw.rectangle(400, cave.getLevelList().get(0).getYLevel(), 400, h / 2);
+            StdDraw.show();
         } else {
-            if (cave.getIdCave() == 1) {
+            if (cave == cave1) {
                 n = Cave.NList.get(1);
                 h = cave1.getCaveHeight() / n;
+
             }
-            if (cave.getIdCave() == 2) {
+            if (cave == cave2) {
                 n = Cave.NList.get(2);
-                System.out.println(n);
                 h = cave2.getCaveHeight() / n;
             }
-            if (cave.getIdCave() == 3) {
+            if (cave == cave3) {
                 n = Cave.NList.get(3);
-                System.out.println(n);
                 h = cave3.getCaveHeight() / n;
             }
-            StdDraw.setPenColor(StdDraw.WHITE);
             for (int i = 0; i < n; i++) {
                 StdDraw.rectangle(400, cave.getLevelList().get(i).getYLevel(), 400, h / 2);
                 StdDraw.picture(750, cave.getLevelList().get(i).getYLevel(), "coffre aux trésors.png", 25, 25);
@@ -114,39 +111,45 @@ public class Main {
         StdDraw.show();
     }
 
+    private static void askForDivers() {
+        int k = 1;
+        while (k != 3) {
+            if (StdDraw.isKeyPressed(KeyEvent.VK_H)) {
+                try { //fait en sorte que l'appui sur le H ne s'effectue qu'une seule fois
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Diver diver = new Diver("Human " + Integer.toString(k), k, 200 - 80 * (k - 1), cave0.getLevelList().get(0).getYLevel(), cave0.getLevelList().get(0), "h");
+                Diver.playerList.add(diver);
+                k++;
+            } else if (StdDraw.isKeyPressed(KeyEvent.VK_I)) {
+                try { //fait en sorte que l'appui sur le I ne s'effectue qu'une seule fois
+                    Thread.sleep(250);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                String nameIA = "IA " + Integer.toString(k);
+                Diver IA = new Diver(nameIA, k, 200 - 80 * (k - 1), cave0.getLevelList().get(0).getYLevel(), cave0.getLevelList().get(0), "i");
+                Diver.playerList.add(IA);
+                k++;
+            }
+        }
+    }
+
 
     private static void displayDiverInit() {
-        int k=1;
-        while (k != 3) {
-
-            Scanner sc1 = new Scanner(System.in);
-            System.out.println("Player " + k + " : Human or IA ?");
-            System.out.println("Press 'h' for Human or 'i' for IA");
-            if (sc1.next().compareTo("h") == 0) {
-                System.out.println("Enter the name of the player " + k + " :");
-                Diver diver = new Diver(sc1.next(), k, 200 - 80 * (k - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "h");
-                Diver.playerList.add(diver);
-                StdDraw.setPenColor(StdDraw.WHITE);
-                Font font2 = new Font("Arial",Font.BOLD,15);
-                StdDraw.setFont(font2);
-                StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + diver.getPlayerName());
-                StdDraw.picture(diver.getXDiver(), diver.getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
-                k++;
-
+        StdDraw.setPenColor(StdDraw.WHITE);
+        Font font2 = new Font("Arial", Font.BOLD, 15);
+        StdDraw.setFont(font2);
+        for (int i = 0; i < 2; i++) {
+            if (Diver.playerList.get(i).getDiverType() == "h") {
+                StdDraw.text(70, 830 - (i) * 40, "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
+                StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
+            } else if (Diver.playerList.get(i).getDiverType() == "i") {
+                StdDraw.text(70, 830 - i * 40, "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
+                StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30);
             }
-            else if (sc1.next().compareTo("i") == 0) {
-                String nameIA = "IA " + Integer.toString(k);
-                Diver IA = new Diver(nameIA, k, 200 - 80 * (k - 1), cave1.getLevelList().get(0).getYLevel(), cave1.getLevelList().get(0), "i");
-                Diver.playerList.add(IA);
-                StdDraw.text(70, 830 - (k-1)*40, "Player" + k + " : " + IA.getPlayerName());
-                StdDraw.picture(IA.getXDiver(), IA.getYDiver(), "Plongeur.png", 30, 30);
-                k++;
-            }
-            else {
-                System.out.println("Please push one of the key asked");
-                displayDiverInit();
-            }
-
         }
         StdDraw.show();
 
