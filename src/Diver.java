@@ -15,6 +15,7 @@ public class Diver {
     private double yDiver;
     private Level playerLevel;
     private String diverType;
+    public static int oxygen;
     public static ArrayList<Diver> playerList = new ArrayList<>();
     private ArrayList<TreasureChest> chestTransported = new ArrayList<>();
     private ArrayList<TreasureChest> depositList = new ArrayList<>();
@@ -82,13 +83,13 @@ public class Diver {
             if (phase == 1) {
                 //on détermine qui va jouer en premier
                 if (r == 0) {
-                    while (Reserve.oxygen > 0) {
+                    while (oxygen > 0) {
                         playerList.get(0).whichPlayFunction(phase); //joueur 1 joue en premier
                         playerList.get(1).whichPlayFunction(phase);
                     }
                 }
                 if (r == 1) {
-                    while (Reserve.oxygen > 0) {
+                    while (oxygen > 0) {
                         playerList.get(1).whichPlayFunction(phase); //joueur 2 joue en premier
                         playerList.get(0).whichPlayFunction(phase);
                     }
@@ -97,26 +98,26 @@ public class Diver {
                 if (sortPlayers() == 1) {
                     StdDraw.setPenColor(StdDraw.WHITE);
                     StdDraw.text(400, 760, Diver.playerList.get(0).getPlayerName() + " STARTS");
-                    while (Reserve.oxygen > 0) {
+                    while (oxygen > 0) {
                         playerList.get(0).whichPlayFunction(phase); //joueur 1 joue en premier
                         playerList.get(1).whichPlayFunction(phase);
                     }
                 } else if (sortPlayers() == 2) {
                     StdDraw.setPenColor(StdDraw.WHITE);
                     StdDraw.text(400, 760, Diver.playerList.get(1).getPlayerName() + " STARTS");
-                    while (Reserve.oxygen > 0) {
+                    while (oxygen > 0) {
                         playerList.get(1).whichPlayFunction(phase); //joueur 2 joue en premier
                         playerList.get(0).whichPlayFunction(phase);
                     }
                 } else { //les deux joueurs sont au même niveau, donc random
                     if (r == 0) {
-                        while (Reserve.oxygen > 0) {
+                        while (oxygen > 0) {
                             playerList.get(0).whichPlayFunction(phase); //joueur 1 joue en premier
                             playerList.get(1).whichPlayFunction(phase);
                         }
                     }
                     if (r == 1) {
-                        while (Reserve.oxygen > 0) {
+                        while (oxygen > 0) {
                             playerList.get(1).whichPlayFunction(phase); //joueur 2 joue en premier
                             playerList.get(0).whichPlayFunction(phase);
                         }
@@ -124,7 +125,7 @@ public class Diver {
                 }
 
             }
-            if (Reserve.oxygen <= 0) {
+            if (oxygen <= 0) {
                 phase++;
                 if (phase <= 3) {
 
@@ -156,7 +157,9 @@ public class Diver {
                     Cave.NList.set(3, newn3);
 
                     int N = newn1 + newn2 + newn3;
-                    Reserve.oxygen = 2 * N; //nouvelle réserve
+                    oxygen = 2 * N; //nouvelle réserve
+                    System.out.println("phase " + phase + " nouvelle reserve " + oxygen);
+                    Main.displayReserve(oxygen);
 
                     Diver.playerList.get(0).getChestTransported().clear(); //on vide les listes de coffres transportés
                     Diver.playerList.get(1).getChestTransported().clear(); //on vide les listes de coffres transportés
@@ -216,11 +219,15 @@ public class Diver {
             if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)) {
                 if (this.getPlayerLevel() == Main.cave0.getLevelList().get(0)) {
                     this.goDown(Main.cave0, this.getPlayerLevel());
-                    Reserve.oxygen = Reserve.oxygenConsumption(this.getChestTransported().size(), Reserve.oxygen);
+                    oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
+                    System.out.println("oxygen baissé dans le goDown " + oxygen);
+                    Main.displayReserve(oxygen);
                     counter++;
                 } else {
                     this.goDown(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel());
-                    Reserve.oxygen = Reserve.oxygenConsumption(this.getChestTransported().size(), Reserve.oxygen);
+                    oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
+                    System.out.println("oxygen baissé dans le goDown " + oxygen);
+                    Main.displayReserve(oxygen);
                     counter++;
                     try { //fait en sorte que l'action ne s'effectue qu'une seule fois
                         Thread.sleep(250);
@@ -234,7 +241,9 @@ public class Diver {
                     //on ne fait rien
                 } else {
                     this.goUp(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel());
-                    Reserve.oxygen = Reserve.oxygenConsumption(this.getChestTransported().size(), Reserve.oxygen);
+                    oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
+                    System.out.println("oxygen baissé dans le goUp " + oxygen);
+                    Main.displayReserve(oxygen);
                     counter++;
                     try { //fait en sorte que l'action ne s'effectue qu'une seule fois
                         Thread.sleep(250);
@@ -246,7 +255,9 @@ public class Diver {
 
             if (StdDraw.isKeyPressed(KeyEvent.VK_ENTER)) { //prendre un coffre dans son chestTransported
                 this.takeChest(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel()-1),this.getPlayerLevel(),phase);
-                Reserve.oxygen = Reserve.oxygenConsumption(0,Reserve.oxygen);
+                oxygen = oxygenConsumption(0, oxygen);
+                System.out.println("oxygen baissé dans le takeChest " + oxygen);
+                Main.displayReserve(oxygen);
                 counter++;
                 try {  //fait en sorte que l'action de prendre le coffre ne s'effectue qu'une seule fois
                     Thread.sleep(250);
@@ -265,7 +276,6 @@ public class Diver {
                 }
             }
         }
-        this.deletePlayer(Main.cave0, this.getPlayerLevel());
     }
 
 
@@ -277,16 +287,22 @@ public class Diver {
                     if (this.playerLevel == Main.cave0.getLevelList().get(0)) { //si l'IA est dans le deposit
                         this.goDown(Main.cave0, this.getPlayerLevel());
                         counter++;
-                        Reserve.oxygen = Reserve.oxygenConsumption(this.getChestTransported().size(), Reserve.oxygen);
+                        oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
+                        System.out.println("oxygen baissé dans le goDown " + oxygen);
+                        Main.displayReserve(oxygen);
                     } else {
                         this.goDown(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel());
                         counter++;
-                        Reserve.oxygen = Reserve.oxygenConsumption(this.getChestTransported().size(), Reserve.oxygen);
+                        oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
+                        System.out.println("oxygen baissé dans le goDown " + oxygen);
+                        Main.displayReserve(oxygen);
                     }
                 } else {
                     this.takeChest(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel(), phase);
                     counter++;
-                    Reserve.oxygen = Reserve.oxygenConsumption(0, Reserve.oxygen);
+                    oxygen = oxygenConsumption(0, oxygen);
+                    System.out.println("oxygen baissé dans le takeChest " + oxygen);
+                    Main.displayReserve(oxygen);
                 }
             } else if (this.getChestTransported().size() == 1) { //dès l'IA a un coffre, elle part le valider
                 if (this.playerLevel == Main.cave0.getLevelList().get(0)) {
@@ -295,7 +311,9 @@ public class Diver {
                 } else {
                     this.goUp(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel());
                     counter++;
-                    Reserve.oxygen = Reserve.oxygenConsumption(this.getChestTransported().size(), Reserve.oxygen);
+                    oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
+                    System.out.println("oxygen baissé dans le goUp " + oxygen);
+                    Main.displayReserve(oxygen);
                 }
                 counter++;
             }
@@ -305,7 +323,6 @@ public class Diver {
                 e.printStackTrace();
             }
         }
-        this.deletePlayer(Main.cave0, this.getPlayerLevel());
     }
 
 
@@ -331,7 +348,7 @@ public class Diver {
    }
 
    public void goDown(Cave cave, Level playerLevel) {
-           this.deletePlayer(cave, playerLevel);
+       this.deletePlayer(cave, playerLevel);
        int n = Cave.NList.get(cave.getIdCave());
            int idLevelDown = playerLevel.getIdLevel() + 1;
 
@@ -642,7 +659,8 @@ public class Diver {
         StdDraw.setPenColor(StdDraw.GRAY);
         StdDraw.filledRectangle(400, Main.y2, 400, 225 / 2);
         StdDraw.setPenColor(StdDraw.DARK_GRAY);
-        StdDraw.filledRectangle(400, Main.y3, 400, 150 / 2);
+        StdDraw.filledRectangle(400, Main.y3, 400, 40);
+        StdDraw.filledRectangle(160, Main.cave3.getLevelList().get(Cave.NList.get(3) - 1).getYLevel(), 60, 40);
         StdDraw.show();
     }
 
@@ -686,5 +704,20 @@ public class Diver {
         }
         this.getChestTransported().clear();
         StdDraw.show();
+    }
+
+    public static int oxygenReserve() {
+        int n1 = Cave.NList.get(1);
+        int n2 = Cave.NList.get(2);
+        int n3 = Cave.NList.get(3);
+        int N = n1 + n2 + n3;
+        oxygen = 4 * N;
+        return oxygen;
+    }
+
+    public static int oxygenConsumption(int nbChests, int oxygen) {
+        int drop = 1 + nbChests;
+        oxygen = oxygen - drop;
+        return oxygen;
     }
 }

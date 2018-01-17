@@ -12,7 +12,9 @@ public class Main {
     public static Cave cave1;
     public static Cave cave2;
     public static Cave cave3;
+    public static int reserveInit;
     public static ArrayList<Cave> caveList = new ArrayList<>();
+
 
     public static void main(String[] args) {
 
@@ -21,10 +23,12 @@ public class Main {
         cave1 = new Cave(1, 325);
         cave2 = new Cave(2,225);
         cave3 = new Cave(3,150);
-        Reserve reserve = new Reserve(cave1, cave2,cave3);
+
         caveList.add(cave1);
         caveList.add(cave2);
         caveList.add(cave3);
+
+        reserveInit = Diver.oxygenReserve();
 
         //affichage
         displayMenu();
@@ -35,7 +39,7 @@ public class Main {
         displayLevelsAndChests(cave1);
         displayLevelsAndChests(cave2);
         displayLevelsAndChests(cave3);
-        displayReserve();
+        displayReserve(reserveInit);
         displayDiverInit();
 
         //jeu
@@ -67,6 +71,7 @@ public class Main {
         Font font3 = new Font("Arial", Font.BOLD, 18);
         StdDraw.setFont(font3);
         StdDraw.text(700, 820, "OXYGEN");
+        StdDraw.filledRectangle(690, 790, 100, 10);
         StdDraw.show();
     }
 
@@ -144,10 +149,10 @@ public class Main {
         StdDraw.setFont(font2);
         for (int i = 0; i < 2; i++) {
             if (Diver.playerList.get(i).getDiverType() == "h") {
-                StdDraw.text(70, 830 - (i) * 40, "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
+                StdDraw.text(70, 830 - (i * 40), "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
                 StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
             } else if (Diver.playerList.get(i).getDiverType() == "i") {
-                StdDraw.text(70, 830 - i * 40, "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
+                StdDraw.text(70, 830 - (i * 40), "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
                 StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30);
             }
         }
@@ -155,14 +160,19 @@ public class Main {
 
     }
 
-    public static void displayReserve() {
-        int n = Reserve.oxygen;
-        StdDraw.filledRectangle(690,790, 2*n, 10);
-        StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-        for (int i=0; i<n; i++)
-            StdDraw.filledRectangle((690-n) + ((2*i)+1),790,2,9);
+    public static void displayReserve(int oxygen) {
+        System.out.println("reserve init dans le display" + reserveInit);
+        double xOxygen = 700 + (((reserveInit - oxygen) / reserveInit) * 100);
+        if (xOxygen <= 800) {
+            StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
+            System.out.println("je suis dans le if");
+            System.out.println("xoxy" + xOxygen);
+            StdDraw.filledRectangle(xOxygen, 790, 800 - xOxygen, 10);
+        } else {
+            System.out.println("je suis dans le else");
+            StdDraw.filledRectangle(xOxygen, 790, 0, 10);
+        }
         StdDraw.show();
-
     }
 }
 
