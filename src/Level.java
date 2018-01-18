@@ -6,12 +6,13 @@ public class Level {
     private int idLevel;
     private double xLevel; //coordonnée x du centre du rectangle représentant le niveau
     private double yLevel;
-    public TreasureChest chest;
-    private ArrayList<TreasureChest> chestList = new ArrayList<>();
+    private TreasureChest chest;
+    public ArrayList<TreasureChest> chestList = new ArrayList<>();
 
     public TreasureChest getChest() {
         return chest;
     }
+
     public void setChest(TreasureChest chest) {
         this.chest = chest;
     }
@@ -27,8 +28,6 @@ public class Level {
     public ArrayList<TreasureChest> getChestList() {
         return chestList;
     }
-
-    public double getXLevel() { return xLevel; }
 
     public double getYLevel() { return yLevel; }
 

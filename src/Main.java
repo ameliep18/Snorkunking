@@ -16,45 +16,19 @@ public class Main {
 
 
     public static void main(String[] args) {
-
-        //initialisation
-        cave0 = new Cave(0, 50);
-        cave1 = new Cave(1, 325);
-        cave2 = new Cave(2,225);
-        cave3 = new Cave(3,150);
-
-        caveList.add(cave1);
-        caveList.add(cave2);
-        caveList.add(cave3);
-
-        reserveInit = Diver.oxygenReserve();
-
-        //affichage
-        displayMenu();
-        askForDivers();
-        displayCanvas();
-        displayCave();
-        displayLevelsAndChests(cave0);
-        displayLevelsAndChests(cave1);
-        displayLevelsAndChests(cave2);
-        displayLevelsAndChests(cave3);
-        displayReserve(reserveInit);
-        displayDiverInit();
-
-        //jeu
-        Diver.game();
+        gameLaunch();
     }
 
     public static double y1 = 375 + 325/2; //coordonnée y du centre du rectangle représentant la cave1
     public static double y2 = 150 + 225/2; //coordonnée y du centre du rectangle représentant la cave2
-    public  static double y3 = 150/2; //coordonnée y du centre du rectangle représentant la cave3
+    public static double y3 = 150 / 2; //coordonnée y du centre du rectangle représentant la cave3
 
 
     private static void displayMenu() {
         StdDraw.setCanvasSize(800, 900);
         StdDraw.setXscale(0, 800);
         StdDraw.setYscale(0, 900);
-        StdDraw.picture(400, 450, "menu.jpg", 600, 800);
+        StdDraw.picture(400, 450, "menu.jpg", 800, 900);
         StdDraw.show();
     }
 
@@ -123,7 +97,7 @@ public class Main {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Diver diver = new Diver("Human " + Integer.toString(k), k, 200 - 80 * (k - 1), cave0.getLevelList().get(0).getYLevel(), cave0.getLevelList().get(0), "h");
+                Diver diver = new Diver("Human " + Integer.toString(k), k, 120 + 80 * (k - 1), cave0.getLevelList().get(0).getYLevel(), cave0.getLevelList().get(0), "h");
                 Diver.playerList.add(diver);
                 k++;
             } else if (StdDraw.isKeyPressed(KeyEvent.VK_I)) {
@@ -133,7 +107,7 @@ public class Main {
                     e.printStackTrace();
                 }
                 String nameIA = "IA " + Integer.toString(k);
-                Diver IA = new Diver(nameIA, k, 200 - 80 * (k - 1), cave0.getLevelList().get(0).getYLevel(), cave0.getLevelList().get(0), "i");
+                Diver IA = new Diver(nameIA, k, 120 + 80 * (k - 1), cave0.getLevelList().get(0).getYLevel(), cave0.getLevelList().get(0), "i");
                 Diver.playerList.add(IA);
                 k++;
             }
@@ -158,24 +132,59 @@ public class Main {
 
     }
 
-    public static void displayReserve(int oxygen) {
-        double xOxG = (double)600 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 100.0);
-        double xOxD = (double)700 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 100.0);
-        if ( xOxG <= 700 && xOxD <= 800){
-            System.out.println(1);
+    public static void displayReserve(int reserveInit, int oxygen) {
+        double xOxygenL = (double) 600 + (((double) (reserveInit - oxygen) / (double) reserveInit) * 100.0); //partie gauche
+        double xOxygenR = (double) 700 + (((double) (reserveInit - oxygen) / (double) reserveInit) * 100.0); //partie droite
+        if (xOxygenL <= 700 && xOxygenR <= 800) {
             StdDraw.setPenColor(StdDraw.WHITE);
-            StdDraw.filledRectangle(xOxG, 790, xOxG-600, 10);
+            StdDraw.filledRectangle(xOxygenL, 790, xOxygenL - 600, 10);
             StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-            StdDraw.filledRectangle(xOxD, 790, 800-xOxD, 10);
+            StdDraw.filledRectangle(xOxygenR, 790, 800 - xOxygenR, 10);
             StdDraw.show();
         }
         else{
-            StdDraw.setPenColor(StdDraw.RED);
+            StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
             StdDraw.filledRectangle(700, 790, 100, 10);
-
         }
-
     }
+
+    public static void gameLaunch() {
+        //initialisation
+        cave0 = new Cave(0, 50);
+        cave1 = new Cave(1, 325);
+        cave2 = new Cave(2, 225);
+        cave3 = new Cave(3, 150);
+        caveList.add(cave1);
+        caveList.add(cave2);
+        caveList.add(cave3);
+        reserveInit = Diver.oxygenReserve();
+        //affichage
+        displayMenu();
+        askForDivers();
+        displayCanvas();
+        displayCave();
+        displayLevelsAndChests(cave0);
+        displayLevelsAndChests(cave1);
+        displayLevelsAndChests(cave2);
+        displayLevelsAndChests(cave3);
+        displayReserve(reserveInit, reserveInit);
+        displayDiverInit();
+        //jeu
+        Diver.game();
+        //replay
+        StdDraw.setPenColor(StdDraw.BOOK_RED);
+        Font font3 = new Font("Arial", Font.BOLD, 20);
+        StdDraw.setFont(font3);
+        StdDraw.text(400, 730, "Press 'R' if you want to replay");
+        StdDraw.show();
+        while (true) {
+            if (StdDraw.isKeyPressed(KeyEvent.VK_R)) {
+                StdDraw.clear();
+                gameLaunch();
+            }
+        }
+    }
+
 }
 
 

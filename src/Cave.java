@@ -5,7 +5,6 @@ public class Cave {
 
     private int idCave;
     private double caveHeight;
-    private int nbLevels;
 
     public ArrayList<Level> levelList = new ArrayList<>();
     public static ArrayList<Integer> NList = new ArrayList<>();
@@ -44,13 +43,11 @@ public class Cave {
                 levelList.add(level);
             }
         }
-        //System.out.println(n);
-        //System.out.println(NList);
     }
 
 
-	public int nbLevels() { //renvoie le nombre de niveaux par cave
-	    int caveNbLevels = 0;
+    private int nbLevels() { //renvoie le nombre de niveaux par cave
+        int caveNbLevels = 0;
         int minLevel;
         int maxLevel;
 
@@ -75,7 +72,7 @@ public class Cave {
         return caveNbLevels;
     }
 
-    public int treasuresPerChest() { //determine le nombre de tresors dans chaque coffre selon la cave dans laquelle ils se trouvent
+    private int treasuresPerChest() { //determine le nombre de tresors dans chaque coffre selon la cave dans laquelle ils se trouvent
         int minTreasure = 0;
         int maxTreasure = 0;
         int caveNbTreasurePerChest;
