@@ -160,6 +160,7 @@ public class Diver {
                     oxygen = 2 * N; //nouvelle réserve
                     System.out.println("phase " + phase + " nouvelle reserve " + oxygen);
                     Main.displayReserve(oxygen);
+                    StdDraw.show();
 
                     Diver.playerList.get(0).getChestTransported().clear(); //on vide les listes de coffres transportés
                     Diver.playerList.get(1).getChestTransported().clear(); //on vide les listes de coffres transportés
@@ -222,12 +223,14 @@ public class Diver {
                     oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
                     System.out.println("oxygen baissé dans le goDown " + oxygen);
                     Main.displayReserve(oxygen);
+                    StdDraw.show();
                     counter++;
                 } else {
                     this.goDown(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel());
                     oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
                     System.out.println("oxygen baissé dans le goDown " + oxygen);
                     Main.displayReserve(oxygen);
+                    StdDraw.show();
                     counter++;
                     try { //fait en sorte que l'action ne s'effectue qu'une seule fois
                         Thread.sleep(250);
@@ -244,6 +247,7 @@ public class Diver {
                     oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
                     System.out.println("oxygen baissé dans le goUp " + oxygen);
                     Main.displayReserve(oxygen);
+                    StdDraw.show();
                     counter++;
                     try { //fait en sorte que l'action ne s'effectue qu'une seule fois
                         Thread.sleep(250);
@@ -258,6 +262,7 @@ public class Diver {
                 oxygen = oxygenConsumption(0, oxygen);
                 System.out.println("oxygen baissé dans le takeChest " + oxygen);
                 Main.displayReserve(oxygen);
+                StdDraw.show();
                 counter++;
                 try {  //fait en sorte que l'action de prendre le coffre ne s'effectue qu'une seule fois
                     Thread.sleep(250);
@@ -290,12 +295,14 @@ public class Diver {
                         oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
                         System.out.println("oxygen baissé dans le goDown " + oxygen);
                         Main.displayReserve(oxygen);
+                        StdDraw.show();
                     } else {
                         this.goDown(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel());
                         counter++;
                         oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
                         System.out.println("oxygen baissé dans le goDown " + oxygen);
                         Main.displayReserve(oxygen);
+                        StdDraw.show();
                     }
                 } else {
                     this.takeChest(Main.caveList.get(this.getPlayerLevel().getIdCaveLevel() - 1), this.getPlayerLevel(), phase);
@@ -303,6 +310,7 @@ public class Diver {
                     oxygen = oxygenConsumption(0, oxygen);
                     System.out.println("oxygen baissé dans le takeChest " + oxygen);
                     Main.displayReserve(oxygen);
+                    StdDraw.show();
                 }
             } else if (this.getChestTransported().size() == 1) { //dès l'IA a un coffre, elle part le valider
                 if (this.playerLevel == Main.cave0.getLevelList().get(0)) {
@@ -314,6 +322,7 @@ public class Diver {
                     oxygen = oxygenConsumption(this.getChestTransported().size(), oxygen);
                     System.out.println("oxygen baissé dans le goUp " + oxygen);
                     Main.displayReserve(oxygen);
+                    StdDraw.show();
                 }
                 counter++;
             }

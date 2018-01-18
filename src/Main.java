@@ -71,7 +71,6 @@ public class Main {
         Font font3 = new Font("Arial", Font.BOLD, 18);
         StdDraw.setFont(font3);
         StdDraw.text(700, 820, "OXYGEN");
-        StdDraw.filledRectangle(690, 790, 100, 10);
         StdDraw.show();
     }
 
@@ -161,18 +160,24 @@ public class Main {
     }
 
     public static void displayReserve(int oxygen) {
-        System.out.println("reserve init dans le display" + reserveInit);
-        double xOxygen = 700 + (((reserveInit - oxygen) / reserveInit) * 100);
-        if (xOxygen <= 800) {
+
+        double xOxygen = 600 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 200.0);
+        double xOxG = (double)600 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 100.0);
+        double xOxD = (double)700 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 100.0);
+        if ( xOxG <= 700 && xOxD <= 800){
+            System.out.println(1);
+            StdDraw.setPenColor(StdDraw.WHITE);
+            StdDraw.filledRectangle(xOxG, 790, xOxG-600, 10);
             StdDraw.setPenColor(StdDraw.BOOK_LIGHT_BLUE);
-            System.out.println("je suis dans le if");
-            System.out.println("xoxy" + xOxygen);
-            StdDraw.filledRectangle(xOxygen, 790, 800 - xOxygen, 10);
-        } else {
-            System.out.println("je suis dans le else");
-            StdDraw.filledRectangle(xOxygen, 790, 0, 10);
+            StdDraw.filledRectangle(xOxD, 790, 800-xOxD, 10);
+            StdDraw.show();
         }
-        StdDraw.show();
+        else{
+            StdDraw.setPenColor(StdDraw.RED);
+            StdDraw.filledRectangle(700, 790, 100, 10);
+
+        }
+
     }
 }
 
