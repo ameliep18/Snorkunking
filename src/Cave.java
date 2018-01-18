@@ -95,4 +95,4 @@ public class Cave {
         return caveNbTreasurePerChest;
     }
 
-} //ferme la classe
+}
