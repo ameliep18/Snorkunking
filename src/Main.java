@@ -3,7 +3,6 @@ import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Main {
@@ -160,8 +159,6 @@ public class Main {
     }
 
     public static void displayReserve(int oxygen) {
-
-        double xOxygen = 600 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 200.0);
         double xOxG = (double)600 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 100.0);
         double xOxD = (double)700 + (((double)(reserveInit - oxygen) / (double)reserveInit) * 100.0);
         if ( xOxG <= 700 && xOxD <= 800){
