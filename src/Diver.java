@@ -211,7 +211,6 @@ public class Diver {
             Main.cave1.getLevelList().clear();
             Main.cave2.getLevelList().clear();
             Main.cave3.getLevelList().clear();
-            //Main.cave3.getLevelList().get(Cave.NList.get(3)-1).getChestList().clear();
             Main.caveList.clear();
             Cave.NList.clear();
             Diver.playerList.clear();

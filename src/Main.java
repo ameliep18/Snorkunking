@@ -120,13 +120,8 @@ public class Main {
         Font font2 = new Font("Arial", Font.BOLD, 15);
         StdDraw.setFont(font2);
         for (int i = 0; i < 2; i++) {
-            if (Diver.playerList.get(i).getDiverType() == "h") {
-                StdDraw.text(70, 830 - (i * 40), "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
-                StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
-            } else if (Diver.playerList.get(i).getDiverType() == "i") {
-                StdDraw.text(70, 830 - (i * 40), "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
-                StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30);
-            }
+            StdDraw.text(70, 830 - (i * 40), "Player" + Integer.toString(i + 1) + " : " + Diver.playerList.get(i).getPlayerName());
+            StdDraw.picture(Diver.playerList.get(i).getXDiver(), Diver.playerList.get(i).getYDiver(), "Plongeur.png", 30, 30); //affiche le plongeur sur la ligne de départ
         }
         StdDraw.show();
 
@@ -175,7 +170,7 @@ public class Main {
         StdDraw.setPenColor(StdDraw.BOOK_RED);
         Font font3 = new Font("Arial", Font.BOLD, 20);
         StdDraw.setFont(font3);
-        StdDraw.text(400, 730, "Press 'R' if you want to replay");
+        StdDraw.text(400, 730, "Press 'r' if you want to replay");
         StdDraw.show();
         while (true) {
             if (StdDraw.isKeyPressed(KeyEvent.VK_R)) {
